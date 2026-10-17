@@ -8,7 +8,7 @@ export default function QuestionCard({ questions }) {
 
   const question = questions[index];
   const [answeredQuestions, setAnsweredQuestions] = useState({});
-  const currentAnswer = answeredQuestions[question.id];
+  const currentAnswer = answeredQuestions[question?.id];
 
   const updatePoints = (selectedOption) => {
     if (answeredQuestions[question.id]) return;
@@ -20,7 +20,9 @@ export default function QuestionCard({ questions }) {
         selectedOption,
         isCorrect,
         message: isCorrect ? "Correct Answer ✅" : "Wrong Answer ❎",
-        styling: isCorrect ? "text-green-500" : "text-red-500",
+        styling: isCorrect
+          ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+          : "bg-rose-50 text-rose-700 border-rose-200",
       },
     }));
 
@@ -29,128 +31,85 @@ export default function QuestionCard({ questions }) {
     }
   };
 
+  if (!question) return null;
+
   return (
-    <>
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Desktop Widescreen Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Left Column / Main Question Card */}
-          <div
-            className="lg:col-span-8 rounded-3xl border p-6 sm:p-10 shadow-xs transition-all duration-300 space-y-8"
-            style={{
-              backgroundColor: "var(--color-surface)",
-              borderColor: "var(--color-border)",
-            }}
-          >
-            <div className="flex w-full flex-col items-center justify-center">
-              {/* Question & Options Component */}
-              <RenderQuestions
-                questionId={question.id}
-                options={question.options}
-                currentQuestion={question.question}
-                isAnswered={!!currentAnswer}
-                isDisabled={!!currentAnswer}
-                selectedOption={currentAnswer?.selectedOption}
-                onAnswer={updatePoints}
-              />
-            </div>
+    <div className="min-h-screen w-full bg-slate-50/50 text-slate-800 antialiased selection:bg-indigo-500 selection:text-white flex items-center justify-center">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+        {/* Responsive Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+          {/* Main Question Column */}
+          <div className="lg:col-span-8 w-full space-y-6">
+            <RenderQuestions
+              questionId={question.id}
+              options={question.options}
+              currentQuestion={question.question}
+              isAnswered={!!currentAnswer}
+              isDisabled={!!currentAnswer}
+              selectedOption={currentAnswer?.selectedOption}
+              onAnswer={updatePoints}
+            />
           </div>
 
-          {/* Right Column / Sidebar for Progress, Feedback, Explanation & Navigation */}
-          <div className="lg:col-span-4 space-y-6 sticky top-28">
-            {/* Progress Bar Container in Sidebar */}
-            <div
-              className="w-full rounded-2xl border p-5 shadow-xs"
-              style={{
-                backgroundColor: "var(--color-surface)",
-                borderColor: "var(--color-border)",
-              }}
-            >
-              <ProgressBar
-                currIndex={index}
-                currentScore={score}
-                questions={questions}
-              />
+          {/* Sidebar Controls Column */}
+          <div className="lg:col-span-4 space-y-5 lg:sticky lg:top-8">
+            {/* Progress Card */}
+            <div className="w-full rounded-2xl bg-white border border-slate-200/80 p-5 shadow-sm">
+              <ProgressBar currIndex={index} />
             </div>
 
-            {/* Answer Result Feedback Card */}
+            {/* Dynamic Answer Feedback Alert */}
             {currentAnswer?.message && (
               <div
-                className={`w-full text-center text-base font-bold tracking-tight px-5 py-3.5 rounded-2xl border shadow-xs transition-all duration-200 animate-fadeIn ${currentAnswer?.styling ?? ""}`}
-                style={{
-                  backgroundColor: "var(--color-surface)",
-                  borderColor: "var(--color-border)",
-                  color: "var(--color-text)",
-                }}
+                className={`w-full text-center text-sm font-bold tracking-wide px-5 py-3.5 rounded-2xl border shadow-xs transition-all duration-300 animate-in fade-in slide-in-from-top-2 ${
+                  currentAnswer?.styling ?? ""
+                }`}
               >
                 {currentAnswer.message}
               </div>
             )}
 
-            {/* Explanation Box with Pinkish Accent */}
+            {/* Explanation Box */}
             {currentAnswer && question.explanation && (
-              <div
-                className="w-full rounded-2xl p-6 text-left text-sm font-medium leading-relaxed ring-1 ring-inset shadow-2xs space-y-2"
-                style={{
-                  backgroundColor: "var(--color-hover)",
-                  color: "var(--color-text)",
-                  borderColor: "var(--color-primary)",
-                }}
-              >
-                <span
-                  className="block text-xs font-bold uppercase tracking-[0.2em]"
-                  style={{ color: "var(--color-purple)" }}
-                >
+              <div className="w-full rounded-2xl border border-indigo-100 bg-gradient-to-br from-indigo-50/50 to-purple-50/30 p-5 text-left text-sm font-medium leading-relaxed shadow-xs space-y-1.5">
+                <span className="block text-[11px] font-bold uppercase tracking-wider text-indigo-600">
                   Explanation
                 </span>
-                <p className="leading-relaxed">{question.explanation}</p>
+                <p className="text-slate-700 text-sm leading-relaxed">
+                  {question.explanation}
+                </p>
               </div>
             )}
 
-            {/* Navigation Controls Card */}
-            <div
-              className="w-full rounded-2xl border p-5 flex items-center justify-between gap-4 shadow-xs"
-              style={{
-                backgroundColor: "var(--color-surface)",
-                borderColor: "var(--color-border)",
-              }}
-            >
+            {/* Navigation Buttons Card */}
+            <div className="w-full rounded-2xl bg-white border border-slate-200/80 p-4 flex items-center justify-between gap-3 shadow-sm">
               {/* Previous Button */}
               <button
                 type="button"
-                className="inline-flex h-12 flex-1 cursor-pointer select-none items-center justify-center rounded-xl border px-4 text-sm font-semibold shadow-2xs transition-all duration-200 ease-out hover:-translate-y-0.5 active:translate-y-0 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-                style={{
-                  backgroundColor: "var(--color-background)",
-                  borderColor: "var(--color-border)",
-                  color: "var(--color-text)",
-                }}
-                onClick={() => {
-                  setIndex((prev) => Math.max(0, prev - 1));
-                }}
+                disabled={index === 0}
+                className="inline-flex h-11 flex-1 cursor-pointer select-none items-center justify-center rounded-xl border border-slate-200/80 bg-white px-4 text-sm font-semibold text-slate-700 shadow-2xs transition-all duration-150 hover:bg-slate-50 hover:border-slate-300 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100"
+                onClick={() => setIndex((prev) => Math.max(0, prev - 1))}
               >
-                <span>←</span>
-                <span className="ml-2">Previous</span>
+                <span className="mr-1.5">←</span>
+                <span>Previous</span>
               </button>
 
-              {/* Next Button styled with Pinkish/Accent theme */}
+              {/* Next Button */}
               <button
                 type="button"
-                className="inline-flex h-12 flex-1 cursor-pointer select-none items-center justify-center rounded-xl px-4 text-sm font-bold shadow-xs transition-all duration-200 ease-out hover:-translate-y-0.5 hover:opacity-95 active:translate-y-0 active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-                style={{
-                  backgroundColor: "var(--color-accent)",
-                  color: "#FFFFFF",
-                }}
-                onClick={() => {
-                  setIndex((prev) => Math.min(questions.length - 1, prev + 1));
-                }}
+                disabled={index === questions.length - 1}
+                className="inline-flex h-11 flex-1 cursor-pointer select-none items-center justify-center rounded-xl bg-indigo-600 px-4 text-sm font-semibold text-white shadow-xs transition-all duration-150 hover:bg-indigo-700 hover:shadow-indigo-200 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100"
+                onClick={() =>
+                  setIndex((prev) => Math.min(questions.length - 1, prev + 1))
+                }
               >
-                <span className="mr-2">Next</span>
-                <span>→</span>
+                <span>Next</span>
+                <span className="ml-1.5">→</span>
               </button>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

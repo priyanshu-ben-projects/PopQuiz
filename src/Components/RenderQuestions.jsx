@@ -7,38 +7,35 @@ function RenderQuestions({
   onAnswer,
   isAnswered,
   isDisabled,
+  selectedOption,
 }) {
   return (
-    <>
-      <div
-        className="w-full rounded-3xl bg-white p-6 shadow-xl shadow-indigo-100/60 ring-1 ring-slate-200/70 transition-shadow duration-300 hover:shadow-2xl hover:shadow-indigo-100 sm:p-8"
-        key={questionId}
-      >
-        <div className="mb-5">
-          <span className="inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-indigo-600 ring-1 ring-inset ring-indigo-100">
-            <span className="h-1.5 w-1.5 rounded-full bg-indigo-500"></span>
-            Question {questionId}
-          </span>
-        </div>
-        <h1 className="mb-7 text-2xl font-extrabold leading-snug tracking-tight text-slate-900 sm:text-[1.75rem]">
-          {currentQuestion}
-        </h1>
-        <form
-          action="#"
-          onSubmit={(event) => {
-            event.preventDefault();
-          }}
-        >
-          <RenderOptions
-            options={options}
-            questionId={questionId}
-            isAnswered={isAnswered}
-            isDisabled={isDisabled}
-            onAnswer={onAnswer}
-          ></RenderOptions>
-        </form>
+    <div className="w-full rounded-3xl bg-white p-6 sm:p-8 shadow-xl shadow-slate-200/50 border border-slate-200/80 transition-all duration-300">
+      {/* Question Badge Header */}
+      <div className="mb-4">
+        <span className="inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3.5 py-1 text-xs font-bold tracking-wider text-indigo-600 border border-indigo-100">
+          <span className="h-2 w-2 rounded-full bg-indigo-500 animate-pulse" />
+          Question {questionId}
+        </span>
       </div>
-    </>
+
+      {/* Main Question Title */}
+      <h1 className="mb-6 text-xl sm:text-2xl font-bold leading-relaxed text-slate-900 tracking-tight">
+        {currentQuestion}
+      </h1>
+
+      {/* Options Component */}
+      <form onSubmit={(e) => e.preventDefault()}>
+        <RenderOptions
+          options={options}
+          questionId={questionId}
+          isAnswered={isAnswered}
+          isDisabled={isDisabled}
+          selectedOption={selectedOption}
+          onAnswer={onAnswer}
+        />
+      </form>
+    </div>
   );
 }
 
