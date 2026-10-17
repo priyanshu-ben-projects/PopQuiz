@@ -31,59 +31,123 @@ export default function QuestionCard({ questions }) {
 
   return (
     <>
-      <div className="mx-auto w-full max-w-2xl space-y-6 px-4 py-8 sm:px-6 sm:py-10">
-        {/* { Progress Bar } */}
-        <ProgressBar
-          currIndex={index}
-          currentScore={score}
-          questions={questions}
-        ></ProgressBar>
-
-        <div className="flex w-full flex-col items-center justify-center gap-6">
-          {/* { Questions Here} */}
-          <RenderQuestions
-            questionId={question.id}
-            options={question.options}
-            currentQuestion={question.question}
-            isAnswered={!!currentAnswer}
-            isDisabled={!!currentAnswer}
-            selectedOption={currentAnswer?.selectedOption}
-            onAnswer={updatePoints}
-          ></RenderQuestions>
-
-          {/* { Show Result } */}
-          <h3
-            className={`${currentAnswer?.styling ?? ""} w-full text-center text-lg font-bold tracking-tight empty:hidden`}
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        {/* Desktop Widescreen Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* Left Column / Main Question Card */}
+          <div
+            className="lg:col-span-8 rounded-3xl border p-6 sm:p-10 shadow-xs transition-all duration-300 space-y-8"
+            style={{
+              backgroundColor: "var(--color-surface)",
+              borderColor: "var(--color-border)",
+            }}
           >
-            {currentAnswer?.message}
-          </h3>
+            <div className="flex w-full flex-col items-center justify-center">
+              {/* Question & Options Component */}
+              <RenderQuestions
+                questionId={question.id}
+                options={question.options}
+                currentQuestion={question.question}
+                isAnswered={!!currentAnswer}
+                isDisabled={!!currentAnswer}
+                selectedOption={currentAnswer?.selectedOption}
+                onAnswer={updatePoints}
+              />
+            </div>
+          </div>
 
-          {/* Explanation */}
-          <h3 className="explanation w-full rounded-2xl bg-indigo-50/70 px-5 py-4 text-left text-sm font-medium leading-relaxed text-indigo-900 ring-1 ring-inset ring-indigo-100 before:mb-1 before:block before:text-[11px] before:font-bold before:uppercase before:tracking-[0.2em] before:text-indigo-500 before:content-['Explanation']">
-            {currentAnswer && question.explanation}
-          </h3>
-
-          {/* Navigation */}
-          <div className="flex w-full items-center justify-between gap-3 border-t border-slate-200/80 pt-6 sm:gap-4">
-            {/* Previous Button */}
-            <button
-              className="inline-flex h-12 min-w-[3.5rem] shrink-0 cursor-pointer select-none items-center justify-center rounded-2xl border border-slate-200 bg-white px-5 text-lg font-semibold text-slate-600 shadow-sm transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900 hover:shadow-md active:translate-y-0 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2"
-              onClick={() => {
-                setIndex((prev) => Math.max(0, prev - 1));
+          {/* Right Column / Sidebar for Progress, Feedback, Explanation & Navigation */}
+          <div className="lg:col-span-4 space-y-6 sticky top-28">
+            {/* Progress Bar Container in Sidebar */}
+            <div
+              className="w-full rounded-2xl border p-5 shadow-xs"
+              style={{
+                backgroundColor: "var(--color-surface)",
+                borderColor: "var(--color-border)",
               }}
             >
-              ←<span className="ml-2 hidden text-sm sm:inline">Previous</span>
-            </button>
+              <ProgressBar
+                currIndex={index}
+                currentScore={score}
+                questions={questions}
+              />
+            </div>
 
-            {/* Next Button */}
-            <button
-              className="inline-flex h-12 flex-1 cursor-pointer select-none items-center justify-center rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 px-8 text-lg font-bold text-white shadow-lg shadow-indigo-500/30 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:from-indigo-500 hover:to-violet-500 hover:shadow-xl hover:shadow-indigo-500/40 active:translate-y-0 active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 sm:min-w-[170px] sm:flex-none"
-              onClick={() => {
-                setIndex((prev) => Math.min(questions.length - 1, prev + 1));
+            {/* Answer Result Feedback Card */}
+            {currentAnswer?.message && (
+              <div
+                className={`w-full text-center text-base font-bold tracking-tight px-5 py-3.5 rounded-2xl border shadow-xs transition-all duration-200 animate-fadeIn ${currentAnswer?.styling ?? ""}`}
+                style={{
+                  backgroundColor: "var(--color-surface)",
+                  borderColor: "var(--color-border)",
+                  color: "var(--color-text)",
+                }}
+              >
+                {currentAnswer.message}
+              </div>
+            )}
+
+            {/* Explanation Box with Pinkish Accent */}
+            {currentAnswer && question.explanation && (
+              <div
+                className="w-full rounded-2xl p-6 text-left text-sm font-medium leading-relaxed ring-1 ring-inset shadow-2xs space-y-2"
+                style={{
+                  backgroundColor: "var(--color-hover)",
+                  color: "var(--color-text)",
+                  borderColor: "var(--color-primary)",
+                }}
+              >
+                <span
+                  className="block text-xs font-bold uppercase tracking-[0.2em]"
+                  style={{ color: "var(--color-purple)" }}
+                >
+                  Explanation
+                </span>
+                <p className="leading-relaxed">{question.explanation}</p>
+              </div>
+            )}
+
+            {/* Navigation Controls Card */}
+            <div
+              className="w-full rounded-2xl border p-5 flex items-center justify-between gap-4 shadow-xs"
+              style={{
+                backgroundColor: "var(--color-surface)",
+                borderColor: "var(--color-border)",
               }}
             >
-              <span className="mr-2 hidden text-sm sm:inline">Next</span>→
-            </button>
+              {/* Previous Button */}
+              <button
+                type="button"
+                className="inline-flex h-12 flex-1 cursor-pointer select-none items-center justify-center rounded-xl border px-4 text-sm font-semibold shadow-2xs transition-all duration-200 ease-out hover:-translate-y-0.5 active:translate-y-0 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                style={{
+                  backgroundColor: "var(--color-background)",
+                  borderColor: "var(--color-border)",
+                  color: "var(--color-text)",
+                }}
+                onClick={() => {
+                  setIndex((prev) => Math.max(0, prev - 1));
+                }}
+              >
+                <span>←</span>
+                <span className="ml-2">Previous</span>
+              </button>
+
+              {/* Next Button styled with Pinkish/Accent theme */}
+              <button
+                type="button"
+                className="inline-flex h-12 flex-1 cursor-pointer select-none items-center justify-center rounded-xl px-4 text-sm font-bold shadow-xs transition-all duration-200 ease-out hover:-translate-y-0.5 hover:opacity-95 active:translate-y-0 active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                style={{
+                  backgroundColor: "var(--color-accent)",
+                  color: "#FFFFFF",
+                }}
+                onClick={() => {
+                  setIndex((prev) => Math.min(questions.length - 1, prev + 1));
+                }}
+              >
+                <span className="mr-2">Next</span>
+                <span>→</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>

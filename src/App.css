@@ -1,1 +1,24 @@
 @import 'tailwindcss';
+
+:root {
+    /* Backgrounds */
+    --color-background: #FFEEF7;
+    --color-surface: #FFFFFF;
+    --color-primary: #FFB6C9;
+    --color-secondary: #E9D8F3;
+
+    /* Brand */
+    --color-accent: #FF6B9D;
+    --color-text: #3D1A45;
+    --color-purple: #6B3FA0;
+    --color-muted: #8A6A91;
+
+    /* Borders & interactions */
+    --color-border: #F5D5E4;
+    --color-hover: #FFE0EC;
+    --color-focus: #C94D87;
+
+    /* Quiz feedback */
+    --color-correct: #2E9D72;
+    --color-incorrect: #D9485F;
+}
