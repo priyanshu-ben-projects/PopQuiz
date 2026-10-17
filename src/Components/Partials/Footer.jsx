@@ -11,9 +11,7 @@ function Footer() {
   return (
     <footer className="w-full border-t border-slate-200 bg-white text-slate-900 mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
-        {/* E-commerce Style Grid: Brand full-width on mobile, links side-by-side */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-start">
-          {/* Column 1: Brand & Bio (Spans 5 cols on desktop, full on mobile) */}
           <div className="md:col-span-5 space-y-4 text-left">
             <Link to="/" className="inline-flex items-center gap-2 group">
               <img
@@ -28,9 +26,7 @@ function Footer() {
             </p>
           </div>
 
-          {/* Right Columns Wrapper: Side-by-side (2-columns) on mobile to save vertical space */}
           <div className="md:col-span-7 grid grid-cols-2 gap-6 sm:gap-8 text-left">
-            {/* Column 2: Quick Links */}
             <div className="space-y-3">
               <h3 className="text-xs font-bold tracking-wider uppercase text-slate-900">
                 Quick Links
@@ -63,7 +59,6 @@ function Footer() {
               </ul>
             </div>
 
-            {/* Column 3: Connect / GitHub Action */}
             <div className="space-y-3">
               <h3 className="text-xs font-bold tracking-wider uppercase text-slate-900">
                 Connect
@@ -92,7 +87,6 @@ function Footer() {
           </div>
         </div>
 
-        {/* Bottom Copyright & Branding Bar */}
         <div className="mt-10 pt-6 border-t border-slate-200 text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
           <p>&copy; {new Date().getFullYear()} PopQuiz. All rights reserved.</p>
           <p className="flex items-center justify-center gap-1">

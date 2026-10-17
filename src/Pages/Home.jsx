@@ -50,13 +50,10 @@ function Home() {
     <>
       <Navbar></Navbar>
       <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] font-sans antialiased">
-        {/* Hero Section */}
         <section className="relative overflow-hidden border-b border-[#E2E8F0] bg-white py-16 sm:py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-              {/* Left Content Column */}
               <div className="lg:col-span-7 space-y-6 text-left">
-                {/* Pill Badge */}
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F1F5F9] border border-[#E2E8F0] text-xs font-semibold text-[#0284C7]">
                   <Sparkles className="w-3.5 h-3.5 text-[#0284C7]" />
                   <span>Next-Gen Skill Assessment Platform</span>
@@ -107,7 +104,6 @@ function Home() {
                 </div>
               </div>
 
-              {/* Right Card Mockup / Preview Column */}
               <div className="lg:col-span-5">
                 <div className="bg-white rounded-xl border border-[#E2E8F0] shadow-xl p-6 sm:p-8 space-y-6 relative">
                   {/* Card Header */}

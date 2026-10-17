@@ -7,7 +7,6 @@ export default function ProgressBar({ currIndex }) {
 
   return (
     <div className="w-full space-y-3">
-      {/* Top Header Row */}
       <div className="flex items-center justify-between text-xs font-semibold tracking-wide text-slate-500 uppercase">
         <span>Progress</span>
         <span className="font-bold text-indigo-600">
@@ -16,16 +15,13 @@ export default function ProgressBar({ currIndex }) {
         </span>
       </div>
 
-      {/* Outer Track */}
       <div className="relative h-3 w-full overflow-hidden rounded-full bg-slate-100 ring-1 ring-inset ring-slate-200/60">
-        {/* Animated Inner Bar */}
         <div
           className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-indigo-600 transition-all duration-500 ease-out shadow-xs"
           style={{ width: `${progressPercent}%` }}
         />
       </div>
 
-      {/* Bottom Percentage Label */}
       <div className="flex justify-end text-[11px] font-medium text-slate-400">
         <span>{progressPercent}% Complete</span>
       </div>

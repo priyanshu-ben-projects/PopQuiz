@@ -2,7 +2,6 @@ export default function RenderOptions({
   options,
   questionId,
   isAnswered,
-  isDisabled,
   selectedOption,
   onAnswer,
 }) {
@@ -37,7 +36,6 @@ export default function RenderOptions({
                 onChange={() => onAnswer(option.option)}
               />
 
-              {/* Option Badge (A, B, C, D) */}
               <span
                 className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-xs font-bold transition-all duration-200 ${
                   isSelected
@@ -54,7 +52,6 @@ export default function RenderOptions({
               </span>
             </div>
 
-            {/* Custom Radio Circle Checkbox */}
             <span
               className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-all duration-200 ${
                 isSelected

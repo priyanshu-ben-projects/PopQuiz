@@ -36,9 +36,7 @@ export default function QuestionCard({ questions }) {
   return (
     <div className="min-h-screen w-full bg-slate-50/50 text-slate-800 antialiased selection:bg-indigo-500 selection:text-white flex items-center justify-center">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
-        {/* Responsive Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
-          {/* Main Question Column */}
           <div className="lg:col-span-8 w-full space-y-6">
             <RenderQuestions
               questionId={question.id}
@@ -58,7 +56,6 @@ export default function QuestionCard({ questions }) {
               <ProgressBar currIndex={index} />
             </div>
 
-            {/* Dynamic Answer Feedback Alert */}
             {currentAnswer?.message && (
               <div
                 className={`w-full text-center text-sm font-bold tracking-wide px-5 py-3.5 rounded-2xl border shadow-xs transition-all duration-300 animate-in fade-in slide-in-from-top-2 ${
@@ -69,7 +66,6 @@ export default function QuestionCard({ questions }) {
               </div>
             )}
 
-            {/* Explanation Box */}
             {currentAnswer && question.explanation && (
               <div className="w-full rounded-2xl border border-indigo-100 bg-gradient-to-br from-indigo-50/50 to-purple-50/30 p-5 text-left text-sm font-medium leading-relaxed shadow-xs space-y-1.5">
                 <span className="block text-[11px] font-bold uppercase tracking-wider text-indigo-600">
@@ -94,7 +90,6 @@ export default function QuestionCard({ questions }) {
                 <span>Previous</span>
               </button>
 
-              {/* Next Button */}
               <button
                 type="button"
                 disabled={index === questions.length - 1}
