@@ -9,14 +9,8 @@ function Footer() {
   };
 
   return (
-    <footer
-      className=" w-full border-t transition-colors duration-300 mt-auto shadow-xs"
-      style={{
-        backgroundColor: "var(--color-surface)",
-        borderColor: "var(--color-border)",
-      }}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
+    <footer className="w-full border-t border-[#E2E8F0] bg-white text-[#0F172A] mt-auto">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Main Grid Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-center md:items-start text-center md:text-left">
           {/* Column 1: Brand & Bio */}
@@ -25,32 +19,25 @@ function Footer() {
               <img
                 src={logoImg}
                 alt="Brand Logo"
-                className="h-10 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+                className="h-9 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
               />
             </Link>
-            <p
-              className="text-sm max-w-xs leading-relaxed"
-              style={{ color: "var(--color-muted)" }}
-            >
-              An interactive platform to test your coding knowledge, explore web
-              apps, and level up your skills.
+            <p className="text-sm text-[#64748B] max-w-xs leading-relaxed">
+              A professional platform to evaluate your skills, benchmark
+              expertise, and accelerate continuous learning.
             </p>
           </div>
 
           {/* Column 2: Quick Links */}
           <div className="space-y-3">
-            <h3
-              className="text-xs font-bold tracking-widest uppercase"
-              style={{ color: "var(--color-purple)" }}
-            >
+            <h3 className="text-xs font-bold tracking-wider uppercase text-[#0F172A]">
               Quick Links
             </h3>
-            <ul className="space-y-2.5">
+            <ul className="space-y-2">
               <li>
                 <Link
                   to="/"
-                  className="text-sm font-medium transition-all duration-200 hover:pl-1 inline-block"
-                  style={{ color: "var(--color-text)" }}
+                  className="text-sm text-[#64748B] hover:text-[#0284C7] transition-colors"
                 >
                   Home
                 </Link>
@@ -58,8 +45,7 @@ function Footer() {
               <li>
                 <Link
                   to="/about"
-                  className="text-sm font-medium transition-all duration-200 hover:pl-1 inline-block"
-                  style={{ color: "var(--color-text)" }}
+                  className="text-sm text-[#64748B] hover:text-[#0284C7] transition-colors"
                 >
                   About me
                 </Link>
@@ -67,8 +53,7 @@ function Footer() {
               <li>
                 <Link
                   to="/quiz"
-                  className="text-sm font-medium transition-all duration-200 hover:pl-1 inline-block"
-                  style={{ color: "var(--color-text)" }}
+                  className="text-sm text-[#64748B] hover:text-[#0284C7] transition-colors"
                 >
                   Start Quiz
                 </Link>
@@ -78,23 +63,16 @@ function Footer() {
 
           {/* Column 3: Connect / GitHub Action */}
           <div className="space-y-3 flex flex-col items-center md:items-start">
-            <h3
-              className="text-xs font-bold tracking-widest uppercase"
-              style={{ color: "var(--color-purple)" }}
-            >
+            <h3 className="text-xs font-bold tracking-wider uppercase text-[#0F172A]">
               Connect
             </h3>
             <button
               onClick={handleGithubClick}
               type="button"
-              style={{
-                backgroundColor: "var(--color-secondary)",
-                color: "var(--color-purple)",
-              }}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 hover:opacity-95 hover:scale-[1.02] active:scale-95 shadow-xs cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold bg-[#F1F5F9] text-[#0F172A] border border-[#E2E8F0] hover:bg-[#E2E8F0] transition-all cursor-pointer shadow-xs"
             >
               <svg
-                className="w-4 h-4 fill-current"
+                className="w-4 h-4 fill-current text-[#059669]"
                 viewBox="0 0 24 24"
                 aria-hidden="true"
               >
@@ -110,16 +88,11 @@ function Footer() {
         </div>
 
         {/* Bottom Copyright & Branding Bar */}
-        <div
-          className="mt-10 pt-6 border-t text-xs flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left"
-          style={{
-            borderColor: "var(--color-border)",
-            color: "var(--color-muted)",
-          }}
-        >
-          <p>&copy; {new Date().getFullYear()} Getter Better EveryDay!.</p>
+        <div className="mt-12 pt-6 border-t border-[#E2E8F0] text-xs text-[#64748B] flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+          <p>&copy; {new Date().getFullYear()} PopQuiz. All rights reserved.</p>
           <p className="flex items-center justify-center gap-1">
-            ~~ Priyanshu Ben{" "}
+            Designed & Developed by{" "}
+            <span className="font-semibold text-[#0F172A]">Priyanshu Ben</span>
           </p>
         </div>
       </div>

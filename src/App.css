@@ -1,24 +1,35 @@
 @import 'tailwindcss';
 
 :root {
-    /* Backgrounds */
-    --color-background: #FFEEF7;
+    /* Professional Slate & Clean Neutral Palette */
+    --color-background: #F8FAFC;
+    /* Slate-50 */
     --color-surface: #FFFFFF;
-    --color-primary: #FFB6C9;
-    --color-secondary: #E9D8F3;
+    /* Pure White */
+    --color-primary: #0F172A;
+    /* Slate-900 (Deep Navy/Black) */
+    --color-secondary: #0284C7;
+    /* Sky-600 */
 
-    /* Brand */
-    --color-accent: #FF6B9D;
-    --color-text: #3D1A45;
-    --color-purple: #6B3FA0;
-    --color-muted: #8A6A91;
+    /* Brand Accents */
+    --color-accent: #059669;
+    /* Emerald-600 (Fiverr/Professional vibe) */
+    --color-text: #0F172A;
+    /* Slate-900 */
+    --color-muted: #64748B;
+    /* Slate-500 */
 
-    /* Borders & interactions */
-    --color-border: #F5D5E4;
-    --color-hover: #FFE0EC;
-    --color-focus: #C94D87;
+    /* Borders & Interactions */
+    --color-border: #E2E8F0;
+    /* Slate-200 */
+    --color-hover: #F1F5F9;
+    /* Slate-100 */
+    --color-focus: #0284C7;
+    /* Sky-600 */
 
-    /* Quiz feedback */
-    --color-correct: #2E9D72;
-    --color-incorrect: #D9485F;
+    /* Quiz Feedback */
+    --color-correct: #10B981;
+    /* Emerald-500 */
+    --color-incorrect: #EF4444;
+    /* Red-500 */
 }
