@@ -1,11 +1,13 @@
 import { useState } from "react";
 import RenderQuestions from "./RenderQuestions";
 import ProgressBar from "./ProgressBar";
+import Timer from "./Timer";
+import { useNavigate } from "react-router-dom";
 
 export default function QuestionCard({ questions }) {
   const [score, setScore] = useState(0);
   const [index, setIndex] = useState(0);
-
+  const navigate = useNavigate();
   const question = questions[index];
   const [answeredQuestions, setAnsweredQuestions] = useState({});
   const currentAnswer = answeredQuestions[question?.id];
@@ -33,6 +35,22 @@ export default function QuestionCard({ questions }) {
 
   if (!question) return null;
 
+  const handleSubmit = () => {
+    const correctAnswers = Object.values(answeredQuestions).filter(
+      (answer) => answer.isCorrect,
+    ).length;
+
+    navigate("/result", {
+      state: {
+        score,
+        totalQuestions: questions.length,
+        answeredQuestions,
+        questions,
+        correctAnswers,
+      },
+    });
+  };
+
   return (
     <div className="min-h-screen w-full bg-slate-50/50 text-slate-800 antialiased selection:bg-indigo-500 selection:text-white flex items-center justify-center">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
@@ -54,6 +72,7 @@ export default function QuestionCard({ questions }) {
             {/* Progress Card */}
             <div className="w-full rounded-2xl bg-white border border-slate-200/80 p-5 shadow-sm">
               <ProgressBar currIndex={index} />
+              <Timer hrs={1} min={1} sec={12} />
             </div>
 
             {currentAnswer?.message && (
@@ -102,6 +121,14 @@ export default function QuestionCard({ questions }) {
                 <span className="ml-1.5">→</span>
               </button>
             </div>
+
+            <button
+              onClick={handleSubmit}
+              type="button"
+              className="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 cursor-pointer active:bg-indigo-800 text-white font-medium rounded-lg shadow-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            >
+              Submit
+            </button>
           </div>
         </div>
       </div>
