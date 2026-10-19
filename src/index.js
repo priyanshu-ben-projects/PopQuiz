@@ -6,5 +6,5 @@ import QuizPage from "./Pages/QuizPage.jsx";
 import Timer from "./Components/Timer.jsx";
 import Home from "../src/Pages/Home.jsx"
 import ResultPage from "./Pages/ResultPage.jsx";
-
-export { QuestionCard, questions, ResultPage, Home, Navbar, Footer, QuizPage, Timer };
+import RenderQuestions from "./Components/RenderQuestions.jsx";
+export { QuestionCard, RenderQuestions, questions, ResultPage, Home, Navbar, Footer, QuizPage, Timer };
