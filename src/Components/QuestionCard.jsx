@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import RenderQuestions from "./RenderQuestions";
 import ProgressBar from "./ProgressBar";
 import Timer from "./Timer";
@@ -9,7 +9,7 @@ export default function QuestionCard({ questions }) {
   const [index, setIndex] = useState(0);
   const navigate = useNavigate();
   const question = questions[index];
-  const [answeredQuestions, setAnsweredQuestions] = useState([]);
+  const [answeredQuestions, setAnsweredQuestions] = useState({});
   const currentAnswer = answeredQuestions[question?.id];
 
   const updatePoints = (selectedOption) => {
@@ -52,6 +52,11 @@ export default function QuestionCard({ questions }) {
     });
   };
 
+  useEffect(() => {
+    if (Object.keys(answeredQuestions).length === questions.length)
+      handleSubmit();
+  }, [answeredQuestions]);
+
   return (
     <div className="min-h-screen w-full bg-slate-50/50 text-slate-800 antialiased selection:bg-indigo-500 selection:text-white flex items-center justify-center">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
@@ -73,7 +78,9 @@ export default function QuestionCard({ questions }) {
             {/* Progress Card */}
             <div className="w-full rounded-2xl bg-white border border-slate-200/80 p-5 shadow-sm">
               <ProgressBar currIndex={index} />
-              <Timer hrs={1} min={1} sec={12} />
+
+              {/* { Render Timer Component } */}
+              <Timer submitQuiz={handleSubmit} hrs={1} min={30} sec={0} />
             </div>
 
             {currentAnswer?.message && (

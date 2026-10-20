@@ -1,14 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export default function Timer({ hrs, min, sec }) {
+export default function Timer({ hrs, min, sec, submitQuiz }) {
   let totalSeconds = hrs * 3600 + min * 60 + sec;
-  const [timeLeft, setTimeLeft] = useState("");
+  const [timeLeft, setTimeLeft] = useState("--:--:--");
+  const submitRef = useRef(submitQuiz);
+
+  useEffect(() => {
+    submitRef.current = submitQuiz;
+  }, [submitQuiz]);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      if (totalSeconds <= 0) {
-        console.log("00:00:00 - Time is up!");
+      if (totalSeconds === 0) {
         clearInterval(timer);
+        submitRef.current();
         return;
       }
 

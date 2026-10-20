@@ -21,7 +21,7 @@ export default function ResultPage() {
     questions = [],
     correctAnswers,
   } = state;
-  console.log(answeredQuestions);
+
   return (
     <div className="max-w-3/4 mx-auto p-6 space-y-6">
       {/* Quiz Stats Header */}
