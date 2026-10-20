@@ -1,4 +1,3 @@
-import { Navbar, Footer } from "../index";
 import { Link } from "react-router-dom";
 import {
   Play,
@@ -48,7 +47,6 @@ function Home() {
   ];
   return (
     <>
-      <Navbar></Navbar>
       <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] font-sans antialiased">
         <section className="relative overflow-hidden border-b border-[#E2E8F0] bg-white py-16 sm:py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -283,7 +281,6 @@ function Home() {
           </div>
         </section>
       </div>
-      <Footer></Footer>
     </>
   );
 }

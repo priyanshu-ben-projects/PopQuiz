@@ -7,4 +7,7 @@ import Timer from "./Components/Timer.jsx";
 import Home from "../src/Pages/Home.jsx"
 import ResultPage from "./Pages/ResultPage.jsx";
 import RenderQuestions from "./Components/RenderQuestions.jsx";
-export { QuestionCard, RenderQuestions, questions, ResultPage, Home, Navbar, Footer, QuizPage, Timer };
+import Layout from "./Layouts/Layout.jsx";
+import NotFound from "./Components/NotFound.jsx";
+
+export { NotFound, QuestionCard, RenderQuestions, questions, ResultPage, Layout, Home, Navbar, Footer, QuizPage, Timer };

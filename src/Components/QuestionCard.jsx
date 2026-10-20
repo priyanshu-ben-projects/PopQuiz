@@ -9,7 +9,7 @@ export default function QuestionCard({ questions }) {
   const [index, setIndex] = useState(0);
   const navigate = useNavigate();
   const question = questions[index];
-  const [answeredQuestions, setAnsweredQuestions] = useState({});
+  const [answeredQuestions, setAnsweredQuestions] = useState([]);
   const currentAnswer = answeredQuestions[question?.id];
 
   const updatePoints = (selectedOption) => {
@@ -19,8 +19,10 @@ export default function QuestionCard({ questions }) {
     setAnsweredQuestions((prev) => ({
       ...prev,
       [question.id]: {
+        ...question, // Original question Details
         selectedOption,
         isCorrect,
+        status: isCorrect ? "Correct" : "Wrong",
         message: isCorrect ? "Correct Answer ✅" : "Wrong Answer ❎",
         styling: isCorrect
           ? "bg-emerald-50 text-emerald-700 border-emerald-200"
@@ -43,7 +45,6 @@ export default function QuestionCard({ questions }) {
     navigate("/result", {
       state: {
         score,
-        totalQuestions: questions.length,
         answeredQuestions,
         questions,
         correctAnswers,

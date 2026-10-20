@@ -1,12 +1,10 @@
 import questions from "../Questions";
-import { QuestionCard, Navbar, Footer } from "../index";
+import { QuestionCard } from "../index";
 
 function QuizPage() {
   return (
     <>
-      <Navbar></Navbar>
       <QuestionCard questions={questions}></QuestionCard>
-      <Footer></Footer>
     </>
   );
 }
