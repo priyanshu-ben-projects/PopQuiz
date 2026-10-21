@@ -1,14 +1,19 @@
+import dotenv from "dotenv";
 if (process.env.NODE_ENV !== "production") {
-    require('dotenv').config();
+    dotenv.config();
 }
 
 import mongoose from 'mongoose';
 import express from 'express';
 import path from 'path';
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 const app = express();
-const path = require("path");
 const MONGO_URL = 'mongodb://localhost:27017/popQuiz';
+import Category from "./models/category.js";
 
 
 app.use(express.urlencoded({ extended: true }));
@@ -34,6 +39,7 @@ app.listen(PORT, () => {
 })
 
 
-app.get("/", (req, res) => {
-    res.send("The Backend is Running!")
+app.get("/api/categories", async (req, res) => {
+    let Categories = await Category.find({});
+    res.send(Categories)
 })

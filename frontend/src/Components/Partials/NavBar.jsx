@@ -8,7 +8,6 @@ export default function Navbar() {
   const navItems = [
     { name: "Home", path: "/" },
     { name: "About me", path: "/about" },
-    { name: "Start Quiz", path: "/quiz" },
   ];
 
   const githubUrl = "https://github.com";

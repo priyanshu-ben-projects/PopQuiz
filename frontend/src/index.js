@@ -9,5 +9,5 @@ import ResultPage from "./Pages/ResultPage.jsx";
 import RenderQuestions from "./Components/RenderQuestions.jsx";
 import Layout from "./Layouts/Layout.jsx";
 import NotFound from "./Components/NotFound.jsx";
-
-export { NotFound, QuestionCard, RenderQuestions, questions, ResultPage, Layout, Home, Navbar, Footer, QuizPage, Timer };
+import BrowseCategory from "./Pages/BrowseCategory.jsx"
+export { NotFound, QuestionCard, RenderQuestions, BrowseCategory, questions, ResultPage, Layout, Home, Navbar, Footer, QuizPage, Timer };
