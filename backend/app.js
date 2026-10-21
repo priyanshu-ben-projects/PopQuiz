@@ -2,8 +2,10 @@ if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
 
-const mongoose = require("mongoose")
-const express = require("express");
+import mongoose from 'mongoose';
+import express from 'express';
+import path from 'path';
+
 const app = express();
 const path = require("path");
 const MONGO_URL = 'mongodb://localhost:27017/popQuiz';
