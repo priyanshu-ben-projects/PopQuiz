@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { NotFound } from "../index";
-
+import ResultStats from "../Components/ResultStats";
 export default function ResultPage() {
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -24,22 +24,12 @@ export default function ResultPage() {
 
   return (
     <div className="max-w-3/4 mx-auto p-6 space-y-6">
-      {/* Quiz Stats Header */}
-      <div className="bg-white rounded border border-slate-200 p-6 shadow-xs grid grid-cols-3 text-center text-sm font-medium text-slate-700">
-        <div>
-          Score: <span className="font-bold text-indigo-600">{score}</span>
-        </div>
-        <div>
-          Progress:{" "}
-          <span className="font-bold text-slate-900">
-            {Object.keys(answeredQuestions).length} / {questions.length}
-          </span>
-        </div>
-        <div>
-          Correct:{" "}
-          <span className="font-bold text-emerald-600">{correctAnswers}</span>
-        </div>
-      </div>
+      <ResultStats
+        finalScore={score}
+        totalAnswered={Object.keys(answeredQuestions).length}
+        totalQuestions={questions.length}
+        totalCorrect={correctAnswers}
+      />
 
       {/* Questions List */}
       {questions.map((question, index) => {
@@ -47,7 +37,6 @@ export default function ResultPage() {
         const userAnswer =
           answeredQuestions[question.id] || answeredQuestions[index + 1];
 
-        // Extract options, correct answer, and selected option safely from either answered data or master question
         const options = userAnswer?.options || question.options || [];
         const correctAnswer =
           userAnswer?.correctAnswer || question.correctAnswer;

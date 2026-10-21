@@ -12,32 +12,35 @@ export default function QuestionCard({ questions }) {
   const [answeredQuestions, setAnsweredQuestions] = useState({});
   const currentAnswer = answeredQuestions[question?.id];
 
-  const updatePoints = (selectedOption) => {
-    if (answeredQuestions[question.id]) return;
-    const isCorrect = selectedOption === question.correctAnswer;
+  const updatePoints = useCallback(
+    (selectedOption) => {
+      if (answeredQuestions[question.id]) return;
+      const isCorrect = selectedOption === question.correctAnswer;
 
-    setAnsweredQuestions((prev) => ({
-      ...prev,
-      [question.id]: {
-        ...question, // Original question Details
-        selectedOption,
-        isCorrect,
-        status: isCorrect ? "Correct" : "Wrong",
-        message: isCorrect ? "Correct Answer ✅" : "Wrong Answer ❎",
-        styling: isCorrect
-          ? "bg-emerald-50 text-emerald-700 border-emerald-200"
-          : "bg-rose-50 text-rose-700 border-rose-200",
-      },
-    }));
+      setAnsweredQuestions((prev) => ({
+        ...prev,
+        [question.id]: {
+          ...question, // Original question Details
+          selectedOption,
+          isCorrect,
+          status: isCorrect ? "Correct" : "Wrong",
+          message: isCorrect ? "Correct Answer ✅" : "Wrong Answer ❎",
+          styling: isCorrect
+            ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+            : "bg-rose-50 text-rose-700 border-rose-200",
+        },
+      }));
 
-    if (isCorrect) {
-      setScore((prev) => prev + 10);
-    }
-  };
+      if (isCorrect) {
+        setScore((prev) => prev + 10);
+      }
+    },
+    [answeredQuestions, question],
+  );
 
   if (!question) return null;
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     const correctAnswers = Object.values(answeredQuestions).filter(
       (answer) => answer.isCorrect,
     ).length;
@@ -50,7 +53,7 @@ export default function QuestionCard({ questions }) {
         correctAnswers,
       },
     });
-  };
+  }, [answeredQuestions, questions, score, navigate]);
 
   useEffect(() => {
     if (Object.keys(answeredQuestions).length === questions.length)
