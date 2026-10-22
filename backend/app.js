@@ -47,7 +47,7 @@ app.get("/api/categories", async (req, res) => {
 
 // Assessment 
 app.post("/api/assessment", async (req, res) => {
-    console.log(req.body);
+    //   console.log(req.body);
 })
 
 
