@@ -10,7 +10,6 @@ export default function BrowseCategory() {
       .get("/api/categories")
       .then((Response) => {
         setCategories(Response.data);
-        console.log(Response.data);
       })
       .catch((err) => {
         console.log(err);

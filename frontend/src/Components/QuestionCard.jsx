@@ -4,11 +4,12 @@ import ProgressBar from "./ProgressBar";
 import Timer from "./Timer";
 import { useNavigate } from "react-router-dom";
 
-export default function QuestionCard({ questions }) {
+export default function QuestionCard({ questions, duration }) {
   const [score, setScore] = useState(0);
   const [index, setIndex] = useState(0);
   const navigate = useNavigate();
   const question = questions[index];
+
   const [answeredQuestions, setAnsweredQuestions] = useState({});
   const currentAnswer = answeredQuestions[question?.id];
 
@@ -38,8 +39,6 @@ export default function QuestionCard({ questions }) {
     [answeredQuestions, question],
   );
 
-  if (!question) return null;
-
   const handleSubmit = useCallback(() => {
     const correctAnswers = Object.values(answeredQuestions).filter(
       (answer) => answer.isCorrect,
@@ -66,7 +65,7 @@ export default function QuestionCard({ questions }) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
           <div className="lg:col-span-8 w-full space-y-6">
             <RenderQuestions
-              questionId={question.id}
+              questionId={question._id}
               options={question.options}
               currentQuestion={question.question}
               isAnswered={!!currentAnswer}
@@ -83,7 +82,7 @@ export default function QuestionCard({ questions }) {
               <ProgressBar currIndex={index} />
 
               {/* { Render Timer Component } */}
-              <Timer submitQuiz={handleSubmit} hrs={1} min={30} sec={0} />
+              <Timer submitQuiz={handleSubmit} totalSeconds={duration} />
             </div>
 
             {currentAnswer?.message && (

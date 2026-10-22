@@ -1,5 +1,12 @@
 import "./App.css";
-import { QuizPage, BrowseCategory, ResultPage, Home, Layout } from "./index.js";
+import {
+  QuizPage,
+  AssessmentForm,
+  BrowseCategory,
+  ResultPage,
+  Home,
+  Layout,
+} from "./index.js";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
@@ -11,6 +18,7 @@ function App() {
           <Route path="/quiz" element={<QuizPage />}></Route>
           <Route path="/result" element={<ResultPage />}></Route>
           <Route path="/categories" element={<BrowseCategory />}></Route>
+          <Route path="/assessment" element={<AssessmentForm />}></Route>
         </Route>
       </Routes>
     </>

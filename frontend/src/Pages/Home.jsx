@@ -8,7 +8,6 @@ import {
   CheckCircle2,
   BarChart3,
   ShieldCheck,
-  Users,
 } from "lucide-react";
 
 function Home() {
@@ -86,7 +85,7 @@ function Home() {
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-4">
                   <Link
-                    to="/quiz"
+                    to="/assessment"
                     className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-lg bg-[#0F172A] text-white font-semibold text-sm hover:bg-[#1E293B] active:scale-[0.99] transition-all shadow-sm"
                   >
                     <Play className="w-4 h-4 fill-current text-[#059669]" />

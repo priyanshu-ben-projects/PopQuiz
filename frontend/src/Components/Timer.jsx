@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-export default function Timer({ hrs, min, sec, submitQuiz }) {
-  let totalSeconds = hrs * 3600 + min * 60 + sec;
+export default function Timer({ totalSeconds, submitQuiz }) {
   const [timeLeft, setTimeLeft] = useState("--:--:--");
   const submitRef = useRef(submitQuiz);
 

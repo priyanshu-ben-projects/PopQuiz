@@ -10,4 +10,7 @@ import RenderQuestions from "./Components/RenderQuestions.jsx";
 import Layout from "./Layouts/Layout.jsx";
 import NotFound from "./Components/NotFound.jsx";
 import BrowseCategory from "./Pages/BrowseCategory.jsx"
-export { NotFound, QuestionCard, RenderQuestions, BrowseCategory, questions, ResultPage, Layout, Home, Navbar, Footer, QuizPage, Timer };
+import AssessmentForm from "./Pages/AssessmentForm.jsx";
+
+
+export { AssessmentForm, NotFound, QuestionCard, RenderQuestions, BrowseCategory, questions, ResultPage, Layout, Home, Navbar, Footer, QuizPage, Timer };
