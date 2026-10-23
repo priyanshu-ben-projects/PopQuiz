@@ -1,14 +1,15 @@
-<p align="center">
-  <img src="./frontend/src/assets/logoImg.png" alt="PopQuiz Logo" width="150">
-</p>
-
-<h1 align="center">PopQuiz 🎯</h1>
-
-<p align="center">
-  A full-stack quiz application built with React, Node.js, Express, and MongoDB.
-</p>
-
-# PopQuiz 🎯
+<div align="center" style="background-color:white">
+  <img src="./frontend/src/assets/logoImg.png" alt="PopQuiz Logo" width="140" />
+</div>
+<hr/>
+<div align="center">
+  <p>
+    <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
+    <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js" />
+    <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express" />
+    <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" />
+  </p>
+</div>
 
 PopQuiz is a full-stack quiz application that allows users to explore quiz categories, customize their assessments, and test their knowledge through dynamically generated quizzes. Built with React, Node.js, Express, and MongoDB, the project focuses on dynamic question selection, database-driven content, and a seamless assessment experience.
 
