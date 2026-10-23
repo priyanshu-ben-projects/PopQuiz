@@ -1,5 +1,5 @@
 <div align="center" style="background-color:#FFFFFF">
-  <img src="./frontend/src/assets/logoImg.png" alt="PopQuiz Logo" width="140" />
+    <img src="./assets/popquiz-banner.png" alt="PopQuiz — Create assessments. Challenge your knowledge." width="100%">
 </div>
 <hr/>
 <div align="center">
