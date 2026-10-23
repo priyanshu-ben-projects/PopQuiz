@@ -1,4 +1,4 @@
-<div align="center" style="background-color:white">
+<div align="center" style="background-color:#FFFFFF">
   <img src="./frontend/src/assets/logoImg.png" alt="PopQuiz Logo" width="140" />
 </div>
 <hr/>
@@ -13,26 +13,31 @@
 
 PopQuiz is a full-stack quiz application that allows users to explore quiz categories, customize their assessments, and test their knowledge through dynamically generated quizzes. Built with React, Node.js, Express, and MongoDB, the project focuses on dynamic question selection, database-driven content, and a seamless assessment experience.
 
-## ✨ Features
+## 🗺️ Roadmap
 
-### ✅ Implemented
+### ✅ Completed
+- [x] Design the MongoDB database structure.
+- [x] Build the quiz category browsing page.
+- [x] Integrate the frontend with the backend using Axios.
+- [x] Create APIs for fetching categories and questions.
+- [x] Implement dynamic question selection based on category.
+- [x] Randomly select questions using MongoDB aggregation.
+- [x] Build the assessment configuration form.
+- [x] Implement the quiz interface with a countdown timer.
+- [x] Display assessment results after quiz completion.
 
-- Browse available quiz categories.
-- Select the number of questions and quiz duration.
-- Fetch questions dynamically based on the selected category.
-- Randomly select questions for each assessment.
-- Take quizzes with a countdown timer.
-- View assessment results after completion.
-- Store and retrieve quiz data using MongoDB.
-- Connect frontend and backend using Axios and REST APIs.
+### 🚧 Upcoming
+- [ ] Implement user authentication and account management.
+- [ ] Add assessment history and performance tracking.
+- [ ] Provide detailed score breakdowns and result analysis.
+- [ ] Improve responsive design across devices.
+- [ ] Expand quiz categories and question management.
+- [ ] Add comprehensive testing and error handling.
 
-### 🚧 Upcoming Features
-
-- User authentication and account management.
-- Assessment history and performance tracking.
-- Detailed result analysis and score breakdown.
-- Responsive UI improvements.
-- Additional quiz categories and question management features.
+### 🎯 Long-Term Goals
+- [ ] Build a personalized dashboard for users.
+- [ ] Track progress and performance over time.
+- [ ] Enhance the application with additional assessment features.
 
 ## 📚 What I Learned
 
