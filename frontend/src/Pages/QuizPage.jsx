@@ -9,7 +9,6 @@ function QuizPage() {
   const location = useLocation();
 
   useEffect(() => {
-    console.log("API call ho gyi!!");
     axios
       .get("api/quiz", {
         params: location.state,
@@ -26,7 +25,9 @@ function QuizPage() {
 
   return (
     <>
-      <QuestionCard duration={720} questions={q}></QuestionCard>
+      {q.length > 0 && (
+        <QuestionCard duration={location.state.duration} questions={q} />
+      )}
     </>
   );
 }

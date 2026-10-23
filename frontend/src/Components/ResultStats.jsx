@@ -9,7 +9,7 @@ export default function ResultStats({
   const navigate = useNavigate();
 
   const handleRestart = () => {
-    navigate("/quiz");
+    navigate("/assessment");
   };
 
   return (

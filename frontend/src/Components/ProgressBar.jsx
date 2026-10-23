@@ -1,6 +1,4 @@
-import questions from "../Questions";
-
-export default function ProgressBar({ currIndex }) {
+export default function ProgressBar({ currIndex, questions }) {
   const totalQuestions = questions.length;
   const currentNumber = currIndex + 1;
   const progressPercent = Math.round((currentNumber / totalQuestions) * 100);

@@ -11,6 +11,6 @@ import Layout from "./Layouts/Layout.jsx";
 import NotFound from "./Components/NotFound.jsx";
 import BrowseCategory from "./Pages/BrowseCategory.jsx"
 import AssessmentForm from "./Pages/AssessmentForm.jsx";
+import AboutPage from "./Pages/AboutPage.jsx";
 
-
-export { AssessmentForm, NotFound, QuestionCard, RenderQuestions, BrowseCategory, questions, ResultPage, Layout, Home, Navbar, Footer, QuizPage, Timer };
+export { AboutPage, AssessmentForm, NotFound, QuestionCard, RenderQuestions, BrowseCategory, questions, ResultPage, Layout, Home, Navbar, Footer, QuizPage, Timer };

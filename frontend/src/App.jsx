@@ -6,6 +6,7 @@ import {
   ResultPage,
   Home,
   Layout,
+  AboutPage,
 } from "./index.js";
 import { Routes, Route } from "react-router-dom";
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/result" element={<ResultPage />}></Route>
           <Route path="/categories" element={<BrowseCategory />}></Route>
           <Route path="/assessment" element={<AssessmentForm />}></Route>
+          <Route path="/about" element={<AboutPage />}></Route>
         </Route>
       </Routes>
     </>

@@ -11,7 +11,7 @@ export default function QuestionCard({ questions, duration }) {
   const question = questions[index];
 
   const [answeredQuestions, setAnsweredQuestions] = useState({});
-  const currentAnswer = answeredQuestions[question?.id];
+  const currentAnswer = answeredQuestions[question?._id];
 
   const updatePoints = useCallback(
     (selectedOption) => {
@@ -20,7 +20,7 @@ export default function QuestionCard({ questions, duration }) {
 
       setAnsweredQuestions((prev) => ({
         ...prev,
-        [question.id]: {
+        [question._id]: {
           ...question, // Original question Details
           selectedOption,
           isCorrect,
@@ -58,7 +58,9 @@ export default function QuestionCard({ questions, duration }) {
     if (Object.keys(answeredQuestions).length === questions.length)
       handleSubmit();
   }, [answeredQuestions]);
-
+  if (!questions.length) {
+    return <p>Loading questions...</p>;
+  }
   return (
     <div className="min-h-screen w-full bg-slate-50/50 text-slate-800 antialiased selection:bg-indigo-500 selection:text-white flex items-center justify-center">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
@@ -79,7 +81,7 @@ export default function QuestionCard({ questions, duration }) {
           <div className="lg:col-span-4 space-y-5 lg:sticky lg:top-8">
             {/* Progress Card */}
             <div className="w-full rounded-2xl bg-white border border-slate-200/80 p-5 shadow-sm">
-              <ProgressBar currIndex={index} />
+              <ProgressBar questions={questions} currIndex={index} />
 
               {/* { Render Timer Component } */}
               <Timer submitQuiz={handleSubmit} totalSeconds={duration} />
