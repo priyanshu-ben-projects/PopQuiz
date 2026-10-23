@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/logoImg.png" alt="PopQuiz Logo" width="150">
+  <img src="./frontend/src/assets/logoImg.png" alt="PopQuiz Logo" width="150">
 </p>
 
 <h1 align="center">PopQuiz 🎯</h1>
@@ -8,12 +8,14 @@
   A full-stack quiz application built with React, Node.js, Express, and MongoDB.
 </p>
 
-
 # PopQuiz 🎯
 
 PopQuiz is a full-stack quiz application that allows users to explore quiz categories, customize their assessments, and test their knowledge through dynamically generated quizzes. Built with React, Node.js, Express, and MongoDB, the project focuses on dynamic question selection, database-driven content, and a seamless assessment experience.
+
 ## ✨ Features
+
 ### ✅ Implemented
+
 - Browse available quiz categories.
 - Select the number of questions and quiz duration.
 - Fetch questions dynamically based on the selected category.
@@ -24,6 +26,7 @@ PopQuiz is a full-stack quiz application that allows users to explore quiz categ
 - Connect frontend and backend using Axios and REST APIs.
 
 ### 🚧 Upcoming Features
+
 - User authentication and account management.
 - Assessment history and performance tracking.
 - Detailed result analysis and score breakdown.
@@ -48,6 +51,7 @@ Building PopQuiz helped me move beyond isolated features and understand how a fu
 ### 💡 Key Takeaway
 
 I believe the best way to learn is by building, experimenting, and solving problems along the way. Every challenge in PopQuiz pushed me to explore new concepts, think independently, and turn unfamiliar problems into learning opportunities. I'm confident in my ability to learn new technologies, adapt to challenges, and keep improving with every project I build.
+
 ## 🚀 Run Locally
 
 ### 1. Clone the Repository
@@ -60,12 +64,14 @@ cd PopQuiz
 ### 2. Install Dependencies
 
 **Frontend**
+
 ```bash
 cd frontend
 npm install
 ```
 
 **Backend**
+
 ```bash
 cd ../backend
 npm install
@@ -83,6 +89,7 @@ PORT=5000
 ### 4. Start the Application
 
 **Backend**
+
 ```bash
 cd backend
 node app.js
@@ -100,6 +107,7 @@ npm run dev
 ### 5. Open PopQuiz
 
 Visit the local URL displayed in your frontend terminal to use the application.
+
 ## 👨‍💻 About Me
 
 Hi, I'm Priyanshu Ben, a developer passionate about building web applications and solving problems through code.
@@ -113,8 +121,6 @@ Hi, I'm Priyanshu Ben, a developer passionate about building web applications an
 
 ## Authors
 
- [@priyanshuben](https://github.com/priyanshu-ben-projects/PopQuiz)
+[@priyanshuben](https://github.com/priyanshu-ben-projects/PopQuiz)
 
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](www.linkedin.com/in/priyanshu-ben)
-
-
