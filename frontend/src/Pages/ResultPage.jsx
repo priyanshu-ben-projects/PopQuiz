@@ -35,7 +35,7 @@ export default function ResultPage() {
       {questions.map((question, index) => {
         // Get answered data for this question if it exists
         const userAnswer =
-          answeredQuestions[question.id] || answeredQuestions[index + 1];
+          answeredQuestions[question._id] || answeredQuestions[index + 1];
 
         const options = userAnswer?.options || question.options || [];
         const correctAnswer =
@@ -45,7 +45,7 @@ export default function ResultPage() {
 
         return (
           <div
-            key={question.id || index}
+            key={question._id || index}
             className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-5"
           >
             <div className="flex justify-between items-start gap-3">

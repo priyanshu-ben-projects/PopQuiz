@@ -15,7 +15,7 @@ export default function QuestionCard({ questions, duration }) {
 
   const updatePoints = useCallback(
     (selectedOption) => {
-      if (answeredQuestions[question.id]) return;
+      if (answeredQuestions[question._id]) return;
       const isCorrect = selectedOption === question.correctAnswer;
 
       setAnsweredQuestions((prev) => ({
