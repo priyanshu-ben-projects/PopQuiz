@@ -1,5 +1,5 @@
 <div align="center" style="background-color:#FFFFFF">
-    <img src="./assets/banner.png" alt="PopQuiz — Create assessments. Challenge your knowledge." width="100%">
+    <img src="./frontend/src/assets/banner.png" alt="PopQuiz — Create assessments. Challenge your knowledge." width="100%">
 </div>
 <hr/>
 <div align="center">
@@ -16,6 +16,7 @@ PopQuiz is a full-stack quiz application that allows users to explore quiz categ
 ## 🗺️ Roadmap
 
 ### ✅ Completed
+
 - [x] Design the MongoDB database structure.
 - [x] Build the quiz category browsing page.
 - [x] Integrate the frontend with the backend using Axios.
@@ -27,6 +28,7 @@ PopQuiz is a full-stack quiz application that allows users to explore quiz categ
 - [x] Display assessment results after quiz completion.
 
 ### 🚧 Upcoming
+
 - [ ] Implement user authentication and account management.
 - [ ] Add assessment history and performance tracking.
 - [ ] Provide detailed score breakdowns and result analysis.
@@ -35,6 +37,7 @@ PopQuiz is a full-stack quiz application that allows users to explore quiz categ
 - [ ] Add comprehensive testing and error handling.
 
 ### 🎯 Long-Term Goals
+
 - [ ] Build a personalized dashboard for users.
 - [ ] Track progress and performance over time.
 - [ ] Enhance the application with additional assessment features.
