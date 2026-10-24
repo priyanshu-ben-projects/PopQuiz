@@ -40,4 +40,5 @@ const teacherSchema = new Schema(
     { timestamps: true }
 );
 
-module.exports = mongoose.model("Teacher", teacherSchema);
+const Teacher = mongoose.model("Teacher", teacherSchema);
+export default Teacher;
