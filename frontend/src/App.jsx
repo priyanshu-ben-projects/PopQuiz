@@ -7,6 +7,7 @@ import {
   Home,
   Layout,
   AboutPage,
+  RegisterUI,
 } from "./index.js";
 import { Routes, Route } from "react-router-dom";
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/categories" element={<BrowseCategory />}></Route>
           <Route path="/assessment" element={<AssessmentForm />}></Route>
           <Route path="/about" element={<AboutPage />}></Route>
+          <Route path="/register" element={<RegisterUI />}></Route>
         </Route>
       </Routes>
     </>

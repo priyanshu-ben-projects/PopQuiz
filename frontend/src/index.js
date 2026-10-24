@@ -12,5 +12,7 @@ import NotFound from "./Components/NotFound.jsx";
 import BrowseCategory from "./Pages/BrowseCategory.jsx"
 import AssessmentForm from "./Pages/AssessmentForm.jsx";
 import AboutPage from "./Pages/AboutPage.jsx";
+import RegisterUI from "./Pages/RegisterPage.jsx";
 
-export { AboutPage, AssessmentForm, NotFound, QuestionCard, RenderQuestions, BrowseCategory, questions, ResultPage, Layout, Home, Navbar, Footer, QuizPage, Timer };
+
+export { AboutPage, RegisterUI, AssessmentForm, NotFound, QuestionCard, RenderQuestions, BrowseCategory, questions, ResultPage, Layout, Home, Navbar, Footer, QuizPage, Timer };
