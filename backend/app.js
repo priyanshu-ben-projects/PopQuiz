@@ -9,23 +9,56 @@ import path from 'path';
 import { fileURLToPath } from "url";
 import session from "express-session";
 
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-
-const app = express();
-const MONGO_URL = process.env.MONGO_URL;
-import Category from "./models/category.js";
-import Question from "./models/question.js";
-import Teacher from "./models/teacher.js";
-import Student from "./models/student.js";
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "views"));
 
-// Session Middleware
+const app = express();
+const MONGO_URL = process.env.MONGO_URL;
+import Category from "./models/category.js";
+import Question from "./models/question.js";
+import User from "./models/user.js";
+
+// Session-Store
+import MongoStore from "connect-mongo";
+
+
+// Session Creation
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET,
+        store: MongoStore.create({ mongoUrl: process.env.MONGO_URL }),
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            path: '/',
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            maxAge: 1000 * 60 * 60 * 24,
+        },
+    }),
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Authentication
+import { Strategy as LocalStrategy } from "passport-local";
+import passport from "passport";
+
+// passport.use(new LocalStrategy(
+//     function (username, password, done) {
+
+//     }
+// ));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 
 
 
@@ -48,6 +81,15 @@ app.listen(PORT, () => {
     console.log("Server Running!");
 })
 
+// app.get("/session-test", (req, res) => {
+//     req.session.visits = (req.session.visits || 0) + 1;
+
+//     res.json({
+//         sessionID: req.sessionID,
+//         visits: req.session.visits,
+//     });
+
+// })
 
 app.get("/api/categories", async (req, res) => {
     let Categories = await Category.find({});

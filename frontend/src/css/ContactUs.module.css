@@ -1,0 +1,129 @@
+.wrapper {
+    width: 100%;
+    padding: 56px 0;
+    color: #0f172a;
+}
+
+.info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.title {
+    max-width: 520px;
+    margin-top: 14px;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.15;
+    letter-spacing: -1px;
+    font-weight: 800;
+}
+
+.description {
+    max-width: 440px;
+    margin-top: 14px;
+    color: #64748b;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.contactDetails {
+    width: 100%;
+    margin-top: 22px;
+}
+
+.socialSection {
+    margin-top: 24px;
+}
+
+.form {
+    min-width: 0;
+    padding: clamp(18px, 3vw, 30px);
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    box-shadow: 0 8px 28px rgb(15 23 42 / 4%);
+}
+
+.formHeader {
+    margin-bottom: 22px;
+}
+
+.formTitle {
+    color: #0f172a;
+    font-size: 22px;
+    font-weight: 750;
+}
+
+.formDescription {
+    margin-top: 6px;
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.inputLabel {
+    margin-bottom: 6px;
+    color: #334155;
+    font-size: 13px;
+    font-weight: 650;
+}
+
+.input {
+    min-height: 44px;
+    color: #0f172a;
+    background: #f8fafc;
+    border-color: #e2e8f0;
+}
+
+.input:focus {
+    background: #ffffff;
+    border-color: #0284c7;
+}
+
+.control {
+    min-height: 44px;
+    background: #0284c7;
+    font-weight: 700;
+}
+
+.control:hover {
+    background: #0369a1;
+}
+
+.formFootnote {
+    margin-top: 12px;
+    color: #94a3b8;
+    font-size: 12px;
+    text-align: center;
+}
+
+/* Tablet and mobile */
+@media (max-width: $mantine-breakpoint-sm) {
+    .wrapper {
+        padding: 36px 0;
+    }
+
+    .title {
+        font-size: clamp(1.9rem, 7vw, 2.5rem);
+        letter-spacing: -0.7px;
+    }
+
+    .description {
+        font-size: 14px;
+    }
+
+    .form {
+        padding: 20px 16px;
+        border-radius: 14px;
+    }
+
+    .formTitle {
+        font-size: 20px;
+    }
+
+    .socialSection {
+        margin-top: 20px;
+    }
+}
