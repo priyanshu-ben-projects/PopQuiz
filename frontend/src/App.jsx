@@ -22,8 +22,8 @@ function App() {
           <Route path="/categories" element={<BrowseCategory />}></Route>
           <Route path="/assessment" element={<AssessmentForm />}></Route>
           <Route path="/about" element={<AboutPage />}></Route>
-          <Route path="/register" element={<RegisterUI />}></Route>
         </Route>
+        <Route path="/register" element={<RegisterUI />}></Route>
       </Routes>
     </>
   );
