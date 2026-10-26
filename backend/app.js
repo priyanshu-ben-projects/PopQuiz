@@ -15,7 +15,7 @@ import passport from "passport";
 import Category from "./models/category.js";
 import User from "./models/user.js";
 import userRouter from "./routes/user.js";
-import quizRouter from "./routes/quiz.js"; // Added missing import referenced at the bottom of app.js
+import quizRouter from "./routes/quiz.js";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);

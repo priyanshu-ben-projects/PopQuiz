@@ -16,6 +16,7 @@ import {
 
 import logo from "../assets/logoImg.png";
 import Field from "../Components/Field.jsx";
+import { useNavigate } from "react-router-dom";
 
 const initialFormData = {
   username: "",
@@ -51,7 +52,7 @@ function RegisterUI() {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
-
+  const navigate = useNavigate();
   const handleAccountTypeChange = (type) => {
     setAccountType(type);
     setError("");
@@ -84,8 +85,10 @@ function RegisterUI() {
 
     try {
       const response = await axios.post("/api/user/register", formData);
-      console.log("Registration successful:", response.data);
+      console.log(response.status, response.data);
+      navigate("/");
     } catch (err) {
+      console.log(err);
       setError(
         err.response?.data?.message ||
           "Unable to create your account. Please try again.",

@@ -10,6 +10,7 @@ import {
   RegisterUI,
 } from "./index.js";
 import { Routes, Route } from "react-router-dom";
+import Login from "./Components/Login";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/result" element={<ResultPage />}></Route>
           <Route path="/categories" element={<BrowseCategory />}></Route>
           <Route path="/assessment" element={<AssessmentForm />}></Route>
+          <Route path="/login" element={<Login />}></Route>
           <Route path="/about" element={<AboutPage />}></Route>
         </Route>
         <Route path="/register" element={<RegisterUI />}></Route>
