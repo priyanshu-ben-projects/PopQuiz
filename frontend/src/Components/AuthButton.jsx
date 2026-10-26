@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useContext, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
+
 import axios from "axios";
 export default function AuthButton() {
-  const [user, setUser] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
+  const { isAuthenticated, setIsAuthenticated, user, setUser } =
+    useContext(AuthContext);
 
   useEffect(() => {
     const checkAuth = async () => {

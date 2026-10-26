@@ -5,7 +5,7 @@ const signup = async (req, res, next) => {
     try {
         const { username, email, password } = req.body;
 
-        await User.deleteMany({});
+        //    await User.deleteMany({});
         const newUser = new User(req.body);
         const registeredUser = await User.register(newUser, password);
 
@@ -28,7 +28,7 @@ const auth = async (req, res, next) => {
     console.log(req.isAuthenticated())
 
     if (!req.isAuthenticated()) {
-        return res.status(401).json({
+        return res.status(200).json({
             isAuthenticated: false
         });
     }
@@ -47,7 +47,7 @@ const logout = async (req, res, next) => {
             return next(err);
         }
 
-        return res.status(401).json({
+        return res.status(200).json({
             isAuthenticated: false
         });
     })

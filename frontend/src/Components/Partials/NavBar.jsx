@@ -50,7 +50,7 @@ export default function Navbar() {
               <img
                 src={logoImg}
                 alt="Brand Logo"
-                className="h-10 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+                className="h-14 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
               />
             </Link>
           </div>

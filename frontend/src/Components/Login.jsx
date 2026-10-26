@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
-
+import AuthContext from "../context/AuthContext.js";
+import logoImg from "../assets/logoImg.png";
 export default function Login() {
+  const { isAuthenticated, setIsAuthenticated, user, setUser } =
+    useContext(AuthContext);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -25,7 +28,9 @@ export default function Login() {
 
     try {
       const response = await axios.post("api/user/login", formData);
+      setIsAuthenticated(true);
       navigate("/", { state: formData });
+      setUser(formData.email);
       console.log("Login successful:", response.data);
 
       // Navigate to your dashboard here.
@@ -43,19 +48,13 @@ export default function Login() {
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
         <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-sky-600 text-2xl font-bold text-white">
-            P
+          <div className="mx-auto  flex h-20  items-center justify-center">
+            <img
+              src={logoImg}
+              alt="PopQuiz Logo"
+              className="h-full w-full rounded-xl object-contain"
+            />
           </div>
-
-          <h1 className="text-3xl font-bold text-slate-900">PopQuiz</h1>
-
-          <p className="mt-1 text-xs font-semibold tracking-widest text-sky-600">
-            SKILL ASSESSMENT
-          </p>
-
-          <h2 className="mt-6 text-xl font-semibold text-slate-900">
-            Welcome back!
-          </h2>
 
           <p className="mt-2 text-sm text-slate-500">
             Log in to continue your learning journey.
