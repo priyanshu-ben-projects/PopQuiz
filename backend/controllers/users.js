@@ -3,7 +3,7 @@ import User from "../models/user.js";
 const signup = async (req, res, next) => {
 
     try {
-        const { username, email, password } = req.body;
+        const { password } = req.body;
 
         //    await User.deleteMany({});
         const newUser = new User(req.body);
@@ -22,10 +22,8 @@ const signup = async (req, res, next) => {
     }
 }
 
-const auth = async (req, res, next) => {
 
-    // const { username } = req.session;
-    console.log(req.isAuthenticated())
+const auth = async (req, res, next) => {
 
     if (!req.isAuthenticated()) {
         return res.status(200).json({
@@ -33,11 +31,11 @@ const auth = async (req, res, next) => {
         });
     }
 
+    const user = req.user;
+
     res.json({
         isAuthenticated: true,
-        user: {
-            email: req.user.email
-        }
+        user: user
     });
 }
 
@@ -72,8 +70,10 @@ const login = async (req, res, next) => {
             if (err) {
                 return next(err);
             } else {
-                console.log(user);
-                res.send(req.isAuthenticated());
+                res.json({
+                    isAuthenticated: true,
+                    user: user
+                });
             }
         })
 

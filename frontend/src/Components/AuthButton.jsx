@@ -4,30 +4,16 @@ import AuthContext from "../context/AuthContext";
 
 import axios from "axios";
 export default function AuthButton() {
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const location = useLocation();
-  const { isAuthenticated, setIsAuthenticated, user, setUser } =
-    useContext(AuthContext);
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const response = await axios.get(`/api/user/auth`, {
-          withCredentials: true,
-        });
-        setIsAuthenticated(response.data.isAuthenticated);
-        setUser(response.data.user.email);
-      } catch (err) {
-        setUser(null);
-        setIsAuthenticated(false);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    checkAuth();
-  }, []);
+  const {
+    isAuthenticated,
+    setIsAuthenticated,
+    loading,
+    setLoading,
+    user,
+    setUser,
+  } = useContext(AuthContext);
 
   const handleLogout = async () => {
     try {
@@ -40,6 +26,7 @@ export default function AuthButton() {
       );
 
       setIsAuthenticated(false);
+
       setUser(null);
       navigate("/");
     } catch (err) {
@@ -64,7 +51,7 @@ export default function AuthButton() {
         onClick={handleLogout}
         className="rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-700"
       >
-        User : {user}
+        User : {user.username}
       </button>
     );
   }

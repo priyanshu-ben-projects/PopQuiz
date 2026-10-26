@@ -4,8 +4,8 @@ import { Navigate, useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext.js";
 import logoImg from "../assets/logoImg.png";
 export default function Login() {
-  const { isAuthenticated, setIsAuthenticated, user, setUser } =
-    useContext(AuthContext);
+  const { setIsAuthenticated, setUser } = useContext(AuthContext);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -14,13 +14,17 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Store FormData
   function handleChange(e) {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   }
+
   const navigate = useNavigate();
+
+  //  <---- #Login ---->
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
@@ -28,12 +32,9 @@ export default function Login() {
 
     try {
       const response = await axios.post("api/user/login", formData);
-      setIsAuthenticated(true);
-      navigate("/", { state: formData });
-      setUser(formData.email);
-      console.log("Login successful:", response.data);
-
-      // Navigate to your dashboard here.
+      setUser(response.data.user);
+      setIsAuthenticated(response.data.isAuthenticated);
+      navigate("/");
     } catch (err) {
       setError(
         err.response?.data?.message ||
