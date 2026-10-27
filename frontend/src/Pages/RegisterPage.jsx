@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import {
   IconBook2,
@@ -17,6 +17,7 @@ import {
 import logo from "../assets/logoImg.png";
 import Field from "../Components/Field.jsx";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
 
 const initialFormData = {
   username: "",
@@ -47,6 +48,7 @@ const accountOptions = [
 ];
 
 function RegisterUI() {
+  const { setIsAuthenticated, setUser } = useContext(AuthContext);
   const [accountType, setAccountType] = useState("student");
   const [formData, setFormData] = useState(initialFormData);
   const [showPassword, setShowPassword] = useState(false);
@@ -85,7 +87,10 @@ function RegisterUI() {
 
     try {
       const response = await axios.post("/api/user/register", formData);
+
       console.log(response.status, response.data);
+      setUser(response.data.user);
+      setIsAuthenticated(response.data.isAuthenticated);
       navigate("/");
     } catch (err) {
       console.log(err);

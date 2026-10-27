@@ -1,8 +1,10 @@
 import { useEffect, useContext, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
-
+import { UserButton } from "./ui/userButton";
+import { DoorOpen, LogOutIcon } from "lucide-react";
 import axios from "axios";
+
 export default function AuthButton() {
   const navigate = useNavigate();
 
@@ -47,13 +49,19 @@ export default function AuthButton() {
 
   if (isAuthenticated) {
     return (
-      <button
-        onClick={handleLogout}
-        className="rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-700"
-      >
-        User : {user.username}
-      </button>
+      <>
+        <Link to="/">
+          <UserButton></UserButton>
+        </Link>
+        <button
+          onClick={handleLogout}
+          className="rounded-lg  text-sm font-semibold text-white transition cursor-pointer"
+        >
+          <LogOutIcon size={17} color="black" />
+        </button>
+      </>
     );
+    x;
   }
 
   return (

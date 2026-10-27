@@ -9,6 +9,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import {
   Sheet,
@@ -18,144 +19,171 @@ import {
   SheetDescription,
   SheetClose,
 } from "@/components/ui/sheet";
-import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
+import {
+  Menu,
+  X,
+  Compass,
+  FileCheck,
+  Info,
+  HelpCircle,
+  LayoutDashboard,
+} from "lucide-react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const navItems = [
-    { name: "Home", path: "/" },
-    { name: "About me", path: "/about" },
+  const exploreLinks = [
+    {
+      title: "Browse Categories",
+      desc: "Explore quizzes across different domains.",
+      path: "/categories",
+      icon: Compass,
+    },
+    {
+      title: "Take an Assessment",
+      desc: "Test your knowledge and evaluate your skills.",
+      path: "/assessment",
+      icon: FileCheck,
+    },
   ];
 
-  const githubUrl = "https://github.com";
-
-  const handleGithubClick = () => {
-    window.open(githubUrl, "_blank", "noopener,noreferrer");
-  };
-
-  const getNavLinkStyle = ({ isActive }) => ({
-    backgroundColor: isActive ? "#F1F5F9" : "transparent",
-    color: isActive ? "#0284C7" : "#64748B",
-    fontWeight: isActive ? "600" : "500",
-  });
+  const resourceLinks = [
+    {
+      title: "About PopQuiz",
+      desc: "Learn about the platform and its purpose.",
+      path: "/about",
+      icon: Info,
+    },
+    {
+      title: "Help & Support",
+      desc: "Get help using PopQuiz.",
+      path: "/help",
+      icon: HelpCircle,
+    },
+  ];
 
   return (
-    <nav className="sticky top-0 z-50 backdrop-blur-md bg-white/90 border-b border-[#E2E8F0] transition-all duration-300 shadow-xs">
+    <header className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/80 backdrop-blur-md transition-all duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Brand Logo */}
+        <div className="flex items-center justify-between h-16 sm:h-20">
+          {/* 1. Left: Brand Logo */}
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center gap-2.5 group">
               <img
                 src={logoImg}
-                alt="Brand Logo"
-                className="h-14 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+                alt="PopQuiz Logo"
+                className="h-10 sm:h-11 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
               />
             </Link>
           </div>
 
-          {/* Desktop Navigation Links */}
-          <div className="hidden md:flex items-center gap-5">
+          {/* 2. Center: Desktop Navigation Links */}
+          <div className="hidden md:flex flex-1 justify-center items-center px-8">
             <NavigationMenu>
-              <NavigationMenuList>
-                {/* Home */}
-                <NavigationMenuItem>
-                  <NavigationMenuLink
-                    render={<NavLink to="/" end />}
-                    className={navigationMenuTriggerStyle()}
-                  >
-                    Home
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-
+              <NavigationMenuList className="gap-2">
                 {/* Explore Dropdown */}
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger
-                    className={navigationMenuTriggerStyle()}
-                  >
+                  <NavigationMenuTrigger className="text-sm font-medium text-slate-600 hover:text-slate-900 focus:text-slate-900 focus:bg-slate-100/60 rounded-lg px-3.5 py-2 transition-colors">
                     Explore
                   </NavigationMenuTrigger>
-
                   <NavigationMenuContent>
-                    <div className="grid w-[320px] gap-1 p-2">
-                      <NavigationMenuLink
-                        render={<NavLink to="/categories" />}
-                        className="block rounded-lg p-3 no-underline outline-none transition-colors hover:bg-slate-100"
-                      >
-                        <p className="text-sm font-semibold text-slate-900">
-                          Browse Categories
-                        </p>
-                        <p className="mt-1 text-xs text-slate-500">
-                          Explore quizzes across different domains.
-                        </p>
-                      </NavigationMenuLink>
-
-                      <NavigationMenuLink
-                        render={<NavLink to="/assessment" />}
-                        className="block rounded-lg p-3 no-underline outline-none transition-colors hover:bg-slate-100"
-                      >
-                        <p className="text-sm font-semibold text-slate-900">
-                          Take an Assessment
-                        </p>
-                        <p className="mt-1 text-xs text-slate-500">
-                          Test your knowledge and evaluate your skills.
-                        </p>
-                      </NavigationMenuLink>
+                    <div className="grid w-[320px] gap-1.5 p-2 bg-white rounded-xl shadow-lg border border-slate-100">
+                      {exploreLinks.map((item) => {
+                        const Icon = item.icon;
+                        return (
+                          <NavigationMenuLink asChild key={item.path}>
+                            <NavLink
+                              to={item.path}
+                              className={({ isActive }) =>
+                                `flex items-start gap-3 rounded-lg p-2.5 transition-colors hover:bg-slate-100/80 ${
+                                  isActive ? "bg-sky-50/80" : ""
+                                }`
+                              }
+                            >
+                              <div className="p-2 rounded-md bg-slate-100 text-slate-700">
+                                <Icon className="w-4 h-4 text-sky-600" />
+                              </div>
+                              <div>
+                                <p className="text-sm font-semibold text-slate-900 leading-snug">
+                                  {item.title}
+                                </p>
+                                <p className="mt-0.5 text-xs text-slate-500 leading-relaxed">
+                                  {item.desc}
+                                </p>
+                              </div>
+                            </NavLink>
+                          </NavigationMenuLink>
+                        );
+                      })}
                     </div>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
                 {/* Resources Dropdown */}
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger
-                    className={navigationMenuTriggerStyle()}
-                  >
+                  <NavigationMenuTrigger className="text-sm font-medium text-slate-600 hover:text-slate-900 focus:text-slate-900 focus:bg-slate-100/60 rounded-lg px-3.5 py-2 transition-colors">
                     Resources
                   </NavigationMenuTrigger>
-
                   <NavigationMenuContent>
-                    <div className="grid w-[320px] gap-1 p-2">
-                      <NavigationMenuLink
-                        render={<NavLink to="/about" />}
-                        className="block rounded-lg p-3 no-underline outline-none transition-colors hover:bg-slate-100"
-                      >
-                        <p className="text-sm font-semibold text-slate-900">
-                          About PopQuiz
-                        </p>
-                        <p className="mt-1 text-xs text-slate-500">
-                          Learn about the platform and its purpose.
-                        </p>
-                      </NavigationMenuLink>
-
-                      <NavigationMenuLink
-                        render={<NavLink to="/help" />}
-                        className="block rounded-lg p-3 no-underline outline-none transition-colors hover:bg-slate-100"
-                      >
-                        <p className="text-sm font-semibold text-slate-900">
-                          Help & Support
-                        </p>
-                        <p className="mt-1 text-xs text-slate-500">
-                          Get help using PopQuiz.
-                        </p>
-                      </NavigationMenuLink>
+                    <div className="grid w-[320px] gap-1.5 p-2 bg-white rounded-xl shadow-lg border border-slate-100">
+                      {resourceLinks.map((item) => {
+                        const Icon = item.icon;
+                        return (
+                          <NavigationMenuLink asChild key={item.path}>
+                            <NavLink
+                              to={item.path}
+                              className={({ isActive }) =>
+                                `flex items-start gap-3 rounded-lg p-2.5 transition-colors hover:bg-slate-100/80 ${
+                                  isActive ? "bg-sky-50/80" : ""
+                                }`
+                              }
+                            >
+                              <div className="p-2 rounded-md bg-slate-100 text-slate-700">
+                                <Icon className="w-4 h-4 text-sky-600" />
+                              </div>
+                              <div>
+                                <p className="text-sm font-semibold text-slate-900 leading-snug">
+                                  {item.title}
+                                </p>
+                                <p className="mt-0.5 text-xs text-slate-500 leading-relaxed">
+                                  {item.desc}
+                                </p>
+                              </div>
+                            </NavLink>
+                          </NavigationMenuLink>
+                        );
+                      })}
                     </div>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
-                {/* Dashboard */}
+                {/* Dashboard Option */}
                 <NavigationMenuItem>
                   <NavigationMenuLink
-                    render={<NavLink to="/dashboard" />}
+                    asChild
                     className={navigationMenuTriggerStyle()}
                   >
-                    Dashboard
+                    <NavLink
+                      to="/dashboard"
+                      className={({ isActive }) =>
+                        `text-sm font-medium px-3.5 py-2 rounded-lg transition-colors ${
+                          isActive
+                            ? "bg-sky-50/80 text-sky-600 font-semibold"
+                            : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/60"
+                        }`
+                      }
+                    >
+                      Dashboard
+                    </NavLink>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
+          </div>
 
-            <AuthButton></AuthButton>
+          {/* 3. Right: Desktop Auth Button CTA */}
+          <div className="hidden md:flex gap-5 items-center justify-end flex-shrink-0">
+            <AuthButton />
           </div>
 
           {/* Mobile Menu Toggle Button */}
@@ -163,108 +191,133 @@ export default function Navbar() {
             <button
               onClick={() => setIsOpen(!isOpen)}
               type="button"
-              className="p-2.5 rounded-lg text-[#0F172A] bg-[#F1F5F9] focus:outline-none transition-colors"
+              className="p-2 rounded-lg text-slate-700 hover:bg-slate-100 active:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500/20 transition-colors"
               aria-controls="mobile-menu"
               aria-expanded={isOpen}
             >
-              <span className="sr-only">Open main menu</span>
-              {!isOpen ? (
-                <svg
-                  className="block h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
+              <span className="sr-only">Toggle Main Menu</span>
+              {isOpen ? (
+                <X className="h-6 w-6" />
               ) : (
-                <svg
-                  className="block h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
+                <Menu className="h-6 w-6" />
               )}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Sidebar Sheet */}
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetContent
           side="right"
-          className="flex w-[280px] flex-col justify-between border-l border-slate-200 bg-white p-6 shadow-xl"
+          className="flex w-full max-w-xs flex-col justify-between border-l border-slate-200 bg-white p-6 shadow-2xl"
         >
-          <div>
-            <SheetHeader className="text-left">
-              <SheetTitle className="text-lg font-bold tracking-tight text-slate-900">
+          <div className="flex flex-col space-y-6">
+            <SheetHeader className="text-left pb-2 border-b border-slate-100">
+              <SheetTitle className="text-xl font-bold tracking-tight text-slate-900">
                 PopQuiz
               </SheetTitle>
               <SheetDescription className="text-xs text-slate-500">
-                Navigate through PopQuiz
+                Navigate through your account and topics
               </SheetDescription>
             </SheetHeader>
 
             <nav
-              className="mt-6 flex flex-col gap-1.5"
+              className="flex flex-col space-y-1"
               aria-label="Mobile Navigation"
             >
-              {navItems.map((item) => (
-                <SheetClose asChild key={item.name}>
-                  <NavLink
-                    to={item.path}
-                    end={item.path === "/"}
-                    className={({ isActive }) =>
-                      `flex items-center rounded-md px-3.5 py-2.5 text-sm font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 ${
-                        isActive
-                          ? "border-l-4 border-sky-600 bg-sky-50 pl-2.5 font-semibold text-sky-700"
-                          : "text-slate-600 hover:bg-slate-100/80 hover:text-slate-900"
-                      }`
-                    }
-                  >
-                    {item.name}
-                  </NavLink>
-                </SheetClose>
-              ))}
+              {/* Home Link */}
+              <SheetClose asChild>
+                <NavLink
+                  to="/"
+                  end
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all ${
+                      isActive
+                        ? "bg-sky-50 text-sky-700 font-semibold border-l-4 border-sky-600 pl-2.5"
+                        : "text-slate-600 hover:bg-slate-100/80 hover:text-slate-900"
+                    }`
+                  }
+                >
+                  Home
+                </NavLink>
+              </SheetClose>
+
+              {/* Explore Section */}
+              <div className="pt-2 pb-1">
+                <span className="px-3.5 text-xs font-semibold uppercase tracking-wider text-slate-400">
+                  Explore
+                </span>
+                <div className="mt-1 space-y-1">
+                  {exploreLinks.map((item) => (
+                    <SheetClose asChild key={item.path}>
+                      <NavLink
+                        to={item.path}
+                        className={({ isActive }) =>
+                          `flex items-center gap-3 rounded-lg px-3.5 py-2 text-sm font-medium transition-all ${
+                            isActive
+                              ? "bg-sky-50 text-sky-700 font-semibold"
+                              : "text-slate-600 hover:bg-slate-100/80 hover:text-slate-900"
+                          }`
+                        }
+                      >
+                        {item.title}
+                      </NavLink>
+                    </SheetClose>
+                  ))}
+                </div>
+              </div>
+
+              {/* Resources Section */}
+              <div className="pt-2 pb-1">
+                <span className="px-3.5 text-xs font-semibold uppercase tracking-wider text-slate-400">
+                  Resources
+                </span>
+                <div className="mt-1 space-y-1">
+                  {resourceLinks.map((item) => (
+                    <SheetClose asChild key={item.path}>
+                      <NavLink
+                        to={item.path}
+                        className={({ isActive }) =>
+                          `flex items-center gap-3 rounded-lg px-3.5 py-2 text-sm font-medium transition-all ${
+                            isActive
+                              ? "bg-sky-50 text-sky-700 font-semibold"
+                              : "text-slate-600 hover:bg-slate-100/80 hover:text-slate-900"
+                          }`
+                        }
+                      >
+                        {item.title}
+                      </NavLink>
+                    </SheetClose>
+                  ))}
+                </div>
+              </div>
+
+              {/* Dashboard Link */}
+              <SheetClose asChild>
+                <NavLink
+                  to="/dashboard"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all ${
+                      isActive
+                        ? "bg-sky-50 text-sky-700 font-semibold border-l-4 border-sky-600 pl-2.5"
+                        : "text-slate-600 hover:bg-slate-100/80 hover:text-slate-900"
+                    }`
+                  }
+                >
+                  <LayoutDashboard className="w-4 h-4 text-sky-600" />
+                  Dashboard
+                </NavLink>
+              </SheetClose>
             </nav>
           </div>
 
-          <div className="pt-4 border-t border-slate-200">
-            <button
-              onClick={handleGithubClick}
-              type="button"
-              className="flex w-full items-center justify-center gap-2.5 rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-medium text-white transition-all hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 active:scale-[0.99]"
-            >
-              {/* GitHub SVG Icon */}
-              <svg
-                className="h-4 w-4 fill-current"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-                />
-              </svg>
-              <span>GitHub</span>
-            </button>
+          {/* Mobile Auth Button CTA */}
+          <div className="pt-4 border-t border-slate-100">
+            <AuthButton />
           </div>
         </SheetContent>
       </Sheet>
-    </nav>
+    </header>
   );
 }

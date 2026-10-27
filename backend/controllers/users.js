@@ -2,18 +2,22 @@ import User from "../models/user.js";
 
 const signup = async (req, res, next) => {
 
+    await User.deleteMany({});
     try {
         const { password } = req.body;
 
-        //    await User.deleteMany({});
         const newUser = new User(req.body);
         const registeredUser = await User.register(newUser, password);
 
         req.login(registeredUser, (err) => {
+
             if (err) {
                 return next(err);
             } else {
-                res.status(201).json({ message: "Account created successfully" });
+                res.status(201).json({
+                    isAuthenticated: true,
+                    user: registeredUser
+                });
             }
         });
 
