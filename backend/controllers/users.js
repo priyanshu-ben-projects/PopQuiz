@@ -1,30 +1,25 @@
 import User from "../models/user.js";
+import CustomError from "../utils/CustomError.js";
 
 const signup = async (req, res, next) => {
+    const { password } = req.body;
+    const newUser = new User(req.body);
+    const registeredUser = await User.register(newUser, password);
 
-    await User.deleteMany({});
-    try {
-        const { password } = req.body;
+    req.login(registeredUser, (err) => {
 
-        const newUser = new User(req.body);
-        const registeredUser = await User.register(newUser, password);
+        if (err) {
+            return next(err);
+        } else {
+            res.status(201).json({
+                isAuthenticated: true,
+                user: registeredUser
+            });
+        }
+    });
 
-        req.login(registeredUser, (err) => {
-
-            if (err) {
-                return next(err);
-            } else {
-                res.status(201).json({
-                    isAuthenticated: true,
-                    user: registeredUser
-                });
-            }
-        });
-
-    } catch (err) {
-        console.log(err)
-    }
 }
+
 
 const auth = async (req, res, next) => {
 
@@ -41,6 +36,7 @@ const auth = async (req, res, next) => {
         user: user
     });
 }
+
 
 const logout = async (req, res, next) => {
     req.logout((err) => {
@@ -91,35 +87,31 @@ const updateUser = async (req, res, next) => {
         });
     }
 
-    try {
-        const { name, contactNo, college, course, institution, domain } = req.body;
+    const { name, contactNo, college, course, institution, domain } = req.body;
 
-        const updatedUser = await User.findOneAndUpdate(
-            { email: req.user.email },
-            {
-                $set: {
-                    username: name,
-                    contactNo: contactNo,
-                    college: college,
-                    institution: institution,
-                    domain: domain,
-                    course: course
-                }
-            },
-            { returnDocument: 'after' }
-        );
+    const updatedUser = await User.findOneAndUpdate(
+        { email: req.user.email },
+        {
+            $set: {
+                username: name,
+                contactNo: contactNo,
+                college: college,
+                institution: institution,
+                domain: domain,
+                course: course
+            }
+        },
+        { returnDocument: 'after' }
+    );
 
-        if (!updatedUser) {
-            return res.status(404).json({
-                message: "User not found."
-            });
-        }
-
-        return res.status(200).json({ user: updatedUser });
-
-    } catch (err) {
-        return next(err);
+    if (!updatedUser) {
+        return res.status(404).json({
+            message: "User not found."
+        });
     }
+
+    return res.status(200).json({ user: updatedUser });
+
 };
 
 

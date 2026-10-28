@@ -13,24 +13,22 @@ function Profile() {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const { user, setUser } = useContext(AuthContext);
 
-  // Temporary data for UI development.
-  // Replace with your AuthContext user later.
-
-  // const [user, setUser] = useState({
-  //   name: "Alex Morgan",
-  //   email: "alex@example.com",
-  //   accountType: "student",
-  //   contactNo: "",
-  //   college: "GN Group of Institutes",
-  //   course: "BCA",
-  // });
-
+  // Temporary Data :
   const stats = {
     quizzesAttempted: 12,
     averageScore: 78,
     bestScore: 95,
     completionRate: 92,
   };
+
+  // Teacher Specific
+  // const stats = {
+  //   quizzesCreated: 8,
+  //   totalParticipants: 124,
+  //   completedAttempts: 96,
+  //   averageScore: 76,
+  // };
+
   const [selectedRecord, setSelectedRecord] = useState(null);
 
   const records = [
@@ -53,14 +51,6 @@ function Profile() {
       participants: 24,
     },
   ];
-
-  // Teacher Specific
-  // const stats = {
-  //   quizzesCreated: 8,
-  //   totalParticipants: 124,
-  //   completedAttempts: 96,
-  //   averageScore: 76,
-  // };
 
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6 lg:px-10">
