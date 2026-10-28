@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+
 import ProfileHeader from "../Components/profile/ProfileHeader.jsx";
 import ProfileInfoCard from "../components/profile/ProfileInfoCard.jsx";
 import ProfileStats from "../components/profile/ProfileStats";
@@ -6,20 +7,23 @@ import QuizHistory from "../components/profile/QuizHistory";
 import EditProfileModal from "../components/profile/EditProfileModal";
 import QuizDetailsModal from "../components/profile/QuizDetailsModal";
 import TeacherAnalyticsModal from "../components/profile/TeacherAnalyticsModal";
+import AuthContext from "../context/AuthContext.js";
+
 function Profile() {
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const { user, setUser } = useContext(AuthContext);
 
   // Temporary data for UI development.
   // Replace with your AuthContext user later.
 
-  const [user, setUser] = useState({
-    name: "Alex Morgan",
-    email: "alex@example.com",
-    accountType: "student",
-    contactNo: "",
-    college: "GN Group of Institutes",
-    course: "BCA",
-  });
+  // const [user, setUser] = useState({
+  //   name: "Alex Morgan",
+  //   email: "alex@example.com",
+  //   accountType: "student",
+  //   contactNo: "",
+  //   college: "GN Group of Institutes",
+  //   course: "BCA",
+  // });
 
   const stats = {
     quizzesAttempted: 12,
@@ -84,17 +88,7 @@ function Profile() {
             />
           ))}
         {isEditOpen && (
-          <EditProfileModal
-            user={user}
-            onClose={() => setIsEditOpen(false)}
-            onSave={(updatedProfile) => {
-              setUser((previous) => ({
-                ...previous,
-                ...updatedProfile,
-              }));
-              setIsEditOpen(false);
-            }}
-          />
+          <EditProfileModal user={user} onClose={() => setIsEditOpen(false)} />
         )}
       </div>
     </main>

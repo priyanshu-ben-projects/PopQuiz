@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { X, UserRound, Save } from "lucide-react";
+import axios from "axios";
+import AuthContext from "../../context/AuthContext.js";
 
 function EditProfileModal({ user, onClose, onSave }) {
   const isTeacher = user?.accountType === "teacher";
 
+  const { setUser, checkAuth } = useContext(AuthContext);
+
   const [formData, setFormData] = useState({
     name: user?.name || user?.username || "",
-    email: user?.email || "",
     contactNo: user?.contactNo || "",
     college: user?.college || "",
     course: user?.course || "",
@@ -37,20 +40,15 @@ function EditProfileModal({ user, onClose, onSave }) {
     setError("");
   };
 
-  const handleSubmit = (event) => {
+  useEffect(() => {
+    console.log("Profile user updated:", user);
+  }, [user]);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-
-    if (!formData.name.trim() || !formData.email.trim()) {
-      setError("Name and email are required.");
-      return;
-    }
-
-    onSave({
-      ...formData,
-      name: formData.name.trim(),
-      email: formData.email.trim(),
-      contactNo: formData.contactNo.trim(),
-    });
+    const response = await axios.post("/api/user/edit", formData);
+    setUser(response.data.user);
+    console.log(response.data.user);
   };
 
   const inputClass =
@@ -61,13 +59,6 @@ function EditProfileModal({ user, onClose, onSave }) {
       name: "name",
       label: "Full Name",
       placeholder: "Enter your full name",
-      required: true,
-    },
-    {
-      name: "email",
-      label: "Email Address",
-      placeholder: "you@example.com",
-      type: "email",
       required: true,
     },
     {
@@ -161,13 +152,7 @@ function EditProfileModal({ user, onClose, onSave }) {
                   onChange={handleChange}
                   placeholder={field.placeholder}
                   required={field.required}
-                  autoComplete={
-                    field.name === "email"
-                      ? "email"
-                      : field.name === "name"
-                        ? "name"
-                        : "off"
-                  }
+                  autoComplete={field.name === "name" ? "name" : "off"}
                   className={inputClass}
                 />
               </label>
@@ -196,7 +181,6 @@ function EditProfileModal({ user, onClose, onSave }) {
               type="submit"
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-sky-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-sky-700"
             >
-              <Save size={16} />
               Save Changes
             </button>
           </div>

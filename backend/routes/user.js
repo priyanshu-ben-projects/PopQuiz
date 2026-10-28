@@ -13,6 +13,8 @@ router.route("/login").post(userController.login);
 
 router.route("/auth").get(userController.auth);
 
+router.route("/edit").post(userController.updateUser);
+
 
 
 export default router;

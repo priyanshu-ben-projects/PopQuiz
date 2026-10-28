@@ -26,7 +26,6 @@ const signup = async (req, res, next) => {
     }
 }
 
-
 const auth = async (req, res, next) => {
 
     if (!req.isAuthenticated()) {
@@ -85,9 +84,47 @@ const login = async (req, res, next) => {
 
 }
 
+const updateUser = async (req, res, next) => {
+    if (!req.user) {
+        return res.status(401).json({
+            message: "User must be logged in."
+        });
+    }
+
+    try {
+        const { name, contactNo, college, course, institution, domain } = req.body;
+
+        const updatedUser = await User.findOneAndUpdate(
+            { email: req.user.email },
+            {
+                $set: {
+                    username: name,
+                    contactNo: contactNo,
+                    college: college,
+                    institution: institution,
+                    domain: domain,
+                    course: course
+                }
+            },
+            { returnDocument: 'after' }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({
+                message: "User not found."
+            });
+        }
+
+        return res.status(200).json({ user: updatedUser });
+
+    } catch (err) {
+        return next(err);
+    }
+};
 
 
 
-export default { signup, auth, logout, login };
+
+export default { signup, auth, logout, updateUser, login };
 
 
