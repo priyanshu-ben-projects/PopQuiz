@@ -166,7 +166,8 @@ export default function BrowseCategory() {
               </button>
             )}
           </div>
-        ) : (
+            ) : (
+                
           /* Categories Grid */
           <div className="grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {filteredCategories.map((item) => (

@@ -21,9 +21,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route element={<IsLoggedIn />}>
-            <Route path="/quiz" element={<QuizPage />}></Route>
             <Route path="/result" element={<ResultPage />}></Route>
             <Route path="/assessment" element={<AssessmentForm />}></Route>
+            <Route path="/quiz" element={<QuizPage />}></Route>
             <Route path="/dashboard" element={<Profile />}></Route>
           </Route>
 

@@ -3,7 +3,7 @@ import RenderQuestions from "./RenderQuestions";
 import ProgressBar from "./ProgressBar";
 import Timer from "./Timer";
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
 export default function QuestionCard({ questions, duration }) {
   const [score, setScore] = useState(0);
   const [index, setIndex] = useState(0);
@@ -39,19 +39,22 @@ export default function QuestionCard({ questions, duration }) {
     [answeredQuestions, question],
   );
 
-  const handleSubmit = useCallback(() => {
+  // Result Submission, /api/quiz
+  const handleSubmit = useCallback(async () => {
     const correctAnswers = Object.values(answeredQuestions).filter(
       (answer) => answer.isCorrect,
     ).length;
 
-    navigate("/result", {
-      state: {
+    const response = await axios.post("/api/quiz", {
+      data: {
         score,
         answeredQuestions,
         questions,
         correctAnswers,
       },
     });
+
+    navigate("/result");
   }, [answeredQuestions, questions, score, navigate]);
 
   useEffect(() => {

@@ -20,8 +20,6 @@ function QuizPage() {
       });
   }, []);
 
-  console.log(q);
-
   return (
     <>
       {q.length > 0 && (

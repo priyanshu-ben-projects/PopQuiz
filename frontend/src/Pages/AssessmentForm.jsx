@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../context/AuthContext.js";
 
 export default function AssessmentForm() {
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
-    username: "Priyanshu Ben",
-    email: "priyansuben42@gmail.com",
+    username: user.username,
+    email: user.email,
     category: "",
     duration: 720,
     questionCount: 20,
