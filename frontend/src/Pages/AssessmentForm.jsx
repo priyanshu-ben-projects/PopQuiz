@@ -12,8 +12,8 @@ export default function AssessmentForm() {
     username: user.username,
     email: user.email,
     category: "",
-    duration: 720,
-    questionCount: 20,
+    duration: 300,
+    questionCount: 10,
   });
 
   useEffect(() => {
@@ -111,6 +111,7 @@ export default function AssessmentForm() {
               name="questionCount"
               className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm text-gray-900 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent cursor-pointer transition"
             >
+              <option value={10}>10 Questions</option>
               <option value={20}>20 Questions</option>
               <option value={30}>30 Questions</option>
               <option value={50}>50 Questions</option>
@@ -132,6 +133,7 @@ export default function AssessmentForm() {
               name="duration"
               className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm text-gray-900 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent cursor-pointer transition"
             >
+              <option value={300}>5 Minutes</option>
               <option value={720}>12 Minutes</option>
               <option value={1200}>20 Minutes</option>
               <option value={1800}>30 Minutes</option>

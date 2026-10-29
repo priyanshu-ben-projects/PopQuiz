@@ -45,12 +45,16 @@ export default function QuestionCard({ questions, duration }) {
       (answer) => answer.isCorrect,
     ).length;
 
+    const isCompleted =
+      Object.keys(answeredQuestions).length == questions.length;
+    console.log(isCompleted);
     const response = await axios.post("/api/quiz", {
       data: {
         score,
         answeredQuestions,
         questions,
         correctAnswers,
+        isCompleted,
       },
     });
 
@@ -58,7 +62,7 @@ export default function QuestionCard({ questions, duration }) {
   }, [answeredQuestions, questions, score, navigate]);
 
   useEffect(() => {
-    if (Object.keys(answeredQuestions).length === questions.length)
+    if (Object.keys(answeredQuestions).length == questions.length)
       handleSubmit();
   }, [answeredQuestions]);
   if (!questions.length) {

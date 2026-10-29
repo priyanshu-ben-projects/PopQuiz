@@ -33,7 +33,6 @@ const startQuiz = async (req, res, next) => {
 
 }
 
-
 const saveResult = async (req, res, next) => {
 
     if (!req.user) {
@@ -43,7 +42,7 @@ const saveResult = async (req, res, next) => {
         });
     }
     const { _id } = req.user;
-    const { answeredQuestions, score, questions, correctAnswers } = req.body.data;
+    const { answeredQuestions, isCompleted, score, questions, correctAnswers } = req.body.data;
 
     const result = await Result.create({
         user: _id,
@@ -51,6 +50,7 @@ const saveResult = async (req, res, next) => {
         answeredQuestions,
         questions,
         correctAnswers,
+        isCompleted,
     });
 
     res.status(200).json({
@@ -84,24 +84,30 @@ const getStats = async (req, res, next) => {
 
     const quizData = await Result.find({ user: _id });
     const bestScore = await Result.find({ user: _id }).sort({ score: -1 }).limit(1);
+    console.log(bestScore)
+    const getAverageScore = await Result.aggregate([
+        { $match: { user: _id } },
+        {
+            $group: {
+                _id: "$user",
+                average: { $avg: "$score" }
+            }
+        }
+    ])
+
+    const averageScore = getAverageScore.length > 0 ? getAverageScore[0].average : 0;
+
+    const totalCompleted = await Result.countDocuments({ isCompleted: true });
+    const completetionRate = totalCompleted > 0 ? ((totalCompleted / quizData.length) * 100) : 0;
 
     const stats = {
         quizzesAttempted: quizData.length,
-        averageScore: 78,
-        bestScore: bestScore[0].score,
-        completionRate: 92,
+        averageScore: Math.floor(averageScore),
+        bestScore: bestScore.length > 0 ? bestScore[0].score : 0,
+        completionRate: Math.floor(completetionRate),
     };
 
-    console.log(stats)
-
-
-    console.log(quizData.length);
-
-
-    res.status(200).json({
-        success: true,
-        msg: "Aye Haye Oye Hoye Aye Haye Oye Hoye"
-    });
+    res.status(200).json({ stats });
 }
 
 

@@ -13,23 +13,25 @@ import AuthContext from "../context/AuthContext.js";
 function Profile() {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const { user, setUser } = useContext(AuthContext);
-
+  const [stats, setStats] = useState({});
   useEffect(() => {
     const fetchStats = async () => {
       const response = await axios.get("/api/quiz/stats");
       console.log(response.data);
+
+      const stats = {
+        quizzesAttempted: response.data.quizzesAttempted,
+        averageScore: response.data.averageScore,
+        bestScore: response.data.bestScore,
+        completionRate: response.data.completeRate,
+      };
+      setStats(stats);
     };
 
     fetchStats();
   });
 
   // Temporary Data :
-  const stats = {
-    quizzesAttempted: 12,
-    averageScore: 78,
-    bestScore: 95,
-    completionRate: 92,
-  };
 
   // Teacher Specific
   // const stats = {
