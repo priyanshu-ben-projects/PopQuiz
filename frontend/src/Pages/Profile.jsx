@@ -1,4 +1,5 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
+import axios from "axios";
 
 import ProfileHeader from "../Components/profile/ProfileHeader.jsx";
 import ProfileInfoCard from "../components/profile/ProfileInfoCard.jsx";
@@ -12,6 +13,15 @@ import AuthContext from "../context/AuthContext.js";
 function Profile() {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const { user, setUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      const response = await axios.get("/api/quiz/stats");
+      console.log(response.data);
+    };
+
+    fetchStats();
+  });
 
   // Temporary Data :
   const stats = {
@@ -59,6 +69,7 @@ function Profile() {
 
         <ProfileInfoCard user={user} onEdit={() => setIsEditOpen(true)} />
         <ProfileStats user={user} stats={stats} />
+
         <QuizHistory
           user={user}
           records={records}

@@ -7,10 +7,11 @@ import isLoggedIn from "../utils/isLoggedIn.js";
 
 router.route("/").get(isLoggedIn, handleAsyncError(quizController.startQuiz));
 
-
 router.route("/").post(isLoggedIn, handleAsyncError(quizController.saveResult));
 
 router.route("/result").get(isLoggedIn, handleAsyncError(quizController.getResult));
+
+router.route("/stats").get(isLoggedIn, handleAsyncError(quizController.getStats));
 
 
 

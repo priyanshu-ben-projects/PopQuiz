@@ -34,7 +34,6 @@ const startQuiz = async (req, res, next) => {
 }
 
 
-
 const saveResult = async (req, res, next) => {
 
     if (!req.user) {
@@ -72,6 +71,38 @@ const getResult = async (req, res, next) => {
 
 }
 
+const getStats = async (req, res, next) => {
+
+    if (!req.isAuthenticated()) {
+        res.status(500).json({
+            success: false,
+            msg: "user must be logged in"
+        });
+    }
+
+    const { _id, accountType } = req.user;
+
+    const quizData = await Result.find({ user: _id });
+    const bestScore = await Result.find({ user: _id }).sort({ score: -1 }).limit(1);
+
+    const stats = {
+        quizzesAttempted: quizData.length,
+        averageScore: 78,
+        bestScore: bestScore[0].score,
+        completionRate: 92,
+    };
+
+    console.log(stats)
 
 
-export default { startQuiz, saveResult, getResult };
+    console.log(quizData.length);
+
+
+    res.status(200).json({
+        success: true,
+        msg: "Aye Haye Oye Hoye Aye Haye Oye Hoye"
+    });
+}
+
+
+export default { getStats, startQuiz, saveResult, getResult };

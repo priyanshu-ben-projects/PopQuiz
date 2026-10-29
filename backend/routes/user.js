@@ -1,5 +1,4 @@
 import express from "express";
-import passport from "passport";
 const router = express.Router();
 import handleAsyncError from "../utils/HandleAsyncErrors.js";
 import userController from "../controllers/users.js";
