@@ -8,6 +8,10 @@ const resultSchema = new mongoose.Schema(
             ref: "User",
             required: true,
         },
+        title: {
+            type: String,
+            default: "Untitled"
+        },
 
         score: {
             type: Number,

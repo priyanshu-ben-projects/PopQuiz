@@ -23,7 +23,7 @@ function QuizHistoryTable({ records, isTeacher, onView }) {
         <table className="w-full min-w-[700px] text-left text-sm">
           <thead className="border-b border-slate-200 bg-slate-50">
             <tr>
-              <th className="px-5 py-4 font-semibold text-slate-600">Quiz</th>
+              <th className="px-5 py-4 font-semibold text-slate-600">Title</th>
               <th className="px-5 py-4 font-semibold text-slate-600">
                 Category
               </th>
@@ -70,9 +70,7 @@ function QuizHistoryTable({ records, isTeacher, onView }) {
                   </td>
 
                   <td className="whitespace-nowrap px-5 py-4 text-slate-500">
-                    {record.date
-                      ? new Date(record.date).toLocaleDateString()
-                      : "—"}
+                    record.date
                   </td>
 
                   <td className="px-5 py-4">

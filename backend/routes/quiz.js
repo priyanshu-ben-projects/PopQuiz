@@ -13,6 +13,8 @@ router.route("/result").get(isLoggedIn, handleAsyncError(quizController.getResul
 
 router.route("/stats").get(isLoggedIn, handleAsyncError(quizController.getStats));
 
+router.route("/records").get(isLoggedIn, handleAsyncError(quizController.getRecords));
+
 
 
 

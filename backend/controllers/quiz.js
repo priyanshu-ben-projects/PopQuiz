@@ -1,5 +1,6 @@
 import Question from "../models/question.js";
 import Result from "../models/result.js";
+import Category from "../models/category.js";
 
 const startQuiz = async (req, res, next) => {
 
@@ -84,7 +85,7 @@ const getStats = async (req, res, next) => {
 
     const quizData = await Result.find({ user: _id });
     const bestScore = await Result.find({ user: _id }).sort({ score: -1 }).limit(1);
-    console.log(bestScore)
+
     const getAverageScore = await Result.aggregate([
         { $match: { user: _id } },
         {
@@ -110,5 +111,35 @@ const getStats = async (req, res, next) => {
     res.status(200).json({ stats });
 }
 
+const getRecords = async (req, res, next) => {
 
-export default { getStats, startQuiz, saveResult, getResult };
+    const { _id } = req.user;
+    const results = await Result.find({ user: _id });
+
+    const data = await Promise.all(results.map(async (e, i) => {
+
+        const categoryID = e.questions[0].category;
+        const categoryData = await Category.find({ _id: categoryID });
+
+        return ({
+            _id: `${i + 1}`,
+            title: e.title,
+            category: categoryData[0].category,
+            score: e.score,
+            date: new Date(e.createdAt).toLocaleDateString('en-GB'),
+            status: e.isCompleted ? "completed" : "incomplete",
+            participants: null,
+        })
+
+
+    }));
+
+    res.status(200).json({
+        success: true,
+        records: data
+    })
+}
+
+
+
+export default { getStats, startQuiz, saveResult, getResult, getRecords };

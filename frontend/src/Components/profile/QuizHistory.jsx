@@ -3,7 +3,7 @@ import { ClipboardList } from "lucide-react";
 import QuizHistoryFilters from "./QuizHistoryFilters";
 import QuizHistoryTable from "./QuizHistoryTable";
 
-function QuizHistory({ user, records = [], onView }) {
+function QuizHistory({ user, records, onView }) {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
   const [status, setStatus] = useState("all");

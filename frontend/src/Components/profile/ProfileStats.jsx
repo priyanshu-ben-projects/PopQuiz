@@ -21,13 +21,13 @@ function ProfileStats({ user, stats }) {
     },
     {
       label: "Average Score",
-      value: `${stats?.averageScore ?? 0}%`,
+      value: `${stats?.averageScore ?? 0}`,
       icon: Target,
       description: "Across your attempts",
     },
     {
       label: "Best Score",
-      value: `${stats?.bestScore ?? 0}%`,
+      value: `${stats?.bestScore ?? 0}`,
       icon: Trophy,
       description: "Your personal best",
     },
