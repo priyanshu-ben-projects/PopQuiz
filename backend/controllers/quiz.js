@@ -117,14 +117,14 @@ const getRecords = async (req, res, next) => {
     const results = await Result.find({ user: _id });
 
     const data = await Promise.all(results.map(async (e, i) => {
-
         const categoryID = e.questions[0].category;
-        const categoryData = await Category.find({ _id: categoryID });
+
+        const categoryData = await Category.findById(categoryID);
 
         return ({
             _id: `${i + 1}`,
             title: e.title,
-            category: categoryData[0].category,
+            category: categoryData.category,
             score: e.score,
             date: new Date(e.createdAt).toLocaleDateString('en-GB'),
             status: e.isCompleted ? "completed" : "incomplete",

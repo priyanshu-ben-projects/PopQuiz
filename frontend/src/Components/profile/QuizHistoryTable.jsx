@@ -66,7 +66,7 @@ function QuizHistoryTable({ records, isTeacher, onView }) {
                   )}
 
                   <td className="px-5 py-4 font-semibold text-slate-800">
-                    {record.score ?? 0}%
+                    {record.score ?? 0}
                   </td>
 
                   <td className="whitespace-nowrap px-5 py-4 text-slate-500">

@@ -42,7 +42,6 @@ function Profile() {
 
     const fetchRecords = async () => {
       const response = await axios.get("/api/quiz/records");
-      console.log(response.data.records);
       setRecords(response.data.records);
     };
 
@@ -84,7 +83,11 @@ function Profile() {
             />
           ))}
         {isEditOpen && (
-          <EditProfileModal user={user} onClose={() => setIsEditOpen(false)} />
+          <EditProfileModal
+            user={user}
+            setIsEditOpen={setIsEditOpen}
+            onClose={() => setIsEditOpen(false)}
+          />
         )}
       </div>
     </main>

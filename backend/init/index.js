@@ -1,7 +1,7 @@
 
 
 // import data from "./data.js";
-import data from "./sample_data.js";
+import data from "./sampe_data.js";
 
 
 import mongoose from "mongoose";

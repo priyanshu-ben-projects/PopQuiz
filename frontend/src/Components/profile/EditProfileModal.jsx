@@ -3,7 +3,7 @@ import { X, UserRound, Save } from "lucide-react";
 import axios from "axios";
 import AuthContext from "../../context/AuthContext.js";
 
-function EditProfileModal({ user, onClose, onSave }) {
+function EditProfileModal({ user, onClose, setIsEditOpen }) {
   const isTeacher = user?.accountType === "teacher";
 
   const { setUser, checkAuth } = useContext(AuthContext);
@@ -40,15 +40,11 @@ function EditProfileModal({ user, onClose, onSave }) {
     setError("");
   };
 
-  useEffect(() => {
-    console.log("Profile user updated:", user);
-  }, [user]);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const response = await axios.post("/api/user/edit", formData);
+    setIsEditOpen(false);
     setUser(response.data.user);
-    console.log(response.data.user);
   };
 
   const inputClass =
