@@ -43,7 +43,7 @@ const saveResult = async (req, res, next) => {
         });
     }
     const { _id } = req.user;
-    const { answeredQuestions, isCompleted, score, questions, correctAnswers } = req.body.data;
+    const { answeredQuestions, duration, isCompleted, score, questions, correctAnswers } = req.body.data;
 
     const result = await Result.create({
         user: _id,
@@ -52,6 +52,7 @@ const saveResult = async (req, res, next) => {
         questions,
         correctAnswers,
         isCompleted,
+        duration,
     });
 
     res.status(200).json({
@@ -122,13 +123,15 @@ const getRecords = async (req, res, next) => {
         const categoryData = await Category.findById(categoryID);
 
         return ({
-            _id: `${i + 1}`,
+
+            _id: e._id,
             title: e.title,
             category: categoryData.category,
             score: e.score,
             date: new Date(e.createdAt).toLocaleDateString('en-GB'),
             status: e.isCompleted ? "completed" : "incomplete",
             participants: null,
+
         })
 
 
@@ -136,10 +139,35 @@ const getRecords = async (req, res, next) => {
 
     res.status(200).json({
         success: true,
-        records: data
+        records: data,
     })
 }
 
+const getReport = async (req, res, next) => {
+
+    const { recordID } = req.query;
+
+    const getResult = await Result.findById(recordID);
 
 
-export default { getStats, startQuiz, saveResult, getResult, getRecords };
+    const { _id, user, title, score, correctAnswers, createdAt, answeredQuestions, isCompleted, questions } = getResult;
+    const keys = Object.keys(answeredQuestions);
+
+    res.status(200).json({
+        report: {
+            _id: _id,
+            user: user,
+            title: title,
+            score: score,
+            correctAnswers: correctAnswers,
+            isCompleted: isCompleted,
+            totalQuestions: questions.length,
+            incorrectAnswers: questions.length - keys.length,
+            date: new Date(createdAt).toLocaleDateString("en-US"),
+        }
+    })
+
+}
+
+
+export default { getStats, getReport, startQuiz, saveResult, getResult, getRecords };

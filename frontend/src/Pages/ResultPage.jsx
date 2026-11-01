@@ -15,37 +15,12 @@ import {
 import { useNavigate } from "react-router-dom";
 
 export default function ResultPage() {
-  const [result, setResult] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all"); // 'all', 'correct', 'incorrect', 'skipped'
-
-  const { user } = useContext(AuthContext);
+  const { result, resultLoading } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchResult = async () => {
-      try {
-        const response = await axios.get("/api/quiz/result", user);
-        const { score, answeredQuestions, questions, correctAnswers } =
-          response.data;
-
-        setResult({
-          score,
-          answeredQuestions: answeredQuestions || {},
-          questions: questions || [],
-          correctAnswers: correctAnswers || 0,
-        });
-      } catch (error) {
-        console.error("Failed to fetch quiz results", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchResult();
-  }, [user]);
-
   // Filtered questions based on tab selection
+
   const filteredQuestions = useMemo(() => {
     if (!result || !result.questions) return [];
 
@@ -93,7 +68,7 @@ export default function ResultPage() {
     });
   }, [result, filter]);
 
-  if (loading) {
+  if (resultLoading) {
     return (
       <div className="w-full min-h-[60vh] flex items-center justify-center">
         <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600"></div>

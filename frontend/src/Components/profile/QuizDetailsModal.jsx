@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   X,
   Trophy,
@@ -8,22 +9,31 @@ import {
   CalendarDays,
   ClipboardCheck,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 
 function QuizDetailsModal({ record, onClose }) {
+  const [report, setReport] = useState(null);
+
+  useEffect(() => {
+    const getRecord = async () => {
+      const response = await axios.get("/api/quiz/report", {
+        params: { recordID: record._id },
+      });
+      console.log(response.data.report);
+      setReport(response.data.report);
+    };
+
+    getRecord();
+  }, []);
+
   if (!record) return null;
 
-  const score = Number(record.score) || 0;
-  const correctAnswers = Number(record.correctAnswers) || 0;
-  const totalQuestions = Number(record.totalQuestions) || 0;
-  const incorrectAnswers = Math.max(0, totalQuestions - correctAnswers);
+  const score = Number(report.score) || 0;
+  const correctAnswers = Number(report.correctAnswers) || 0;
+  const totalQuestions = Number(report.totalQuestions) || 0;
+  const incorrectAnswers = incorrectAnswers;
 
-  const formattedDate = record.date
-    ? new Date(record.date).toLocaleDateString(undefined, {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-      })
-    : "Not available";
+  const formattedDate = report.date;
 
   const stats = [
     {
@@ -140,7 +150,7 @@ function QuizDetailsModal({ record, onClose }) {
               <div>
                 <p className="text-xs text-slate-500">Attempt Date</p>
                 <p className="mt-1 text-sm font-semibold text-slate-800">
-                  {formattedDate}
+                  {record.date}
                 </p>
               </div>
             </div>

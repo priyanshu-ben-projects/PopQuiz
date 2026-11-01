@@ -47,7 +47,7 @@ export default function QuestionCard({ questions, duration }) {
 
     const isCompleted =
       Object.keys(answeredQuestions).length == questions.length;
-    console.log(isCompleted);
+
     const response = await axios.post("/api/quiz", {
       data: {
         score,
@@ -55,6 +55,7 @@ export default function QuestionCard({ questions, duration }) {
         questions,
         correctAnswers,
         isCompleted,
+        duration,
       },
     });
 
@@ -65,6 +66,7 @@ export default function QuestionCard({ questions, duration }) {
     if (Object.keys(answeredQuestions).length == questions.length)
       handleSubmit();
   }, [answeredQuestions]);
+
   if (!questions.length) {
     return <p>Loading questions...</p>;
   }

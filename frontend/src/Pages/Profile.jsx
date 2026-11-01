@@ -15,6 +15,7 @@ function Profile() {
   const { user, setUser } = useContext(AuthContext);
   const [stats, setStats] = useState({});
   const [records, setRecords] = useState(null);
+  const [report, setReport] = useState(null);
   const [selectedRecord, setSelectedRecord] = useState(null);
 
   useEffect(() => {

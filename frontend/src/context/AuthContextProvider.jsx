@@ -1,12 +1,13 @@
 import AuthContext from "./AuthContext";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 
 export default function AuthContextProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
+  const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const [resultLoading, setResultLoading] = useState(false);
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -26,6 +27,32 @@ export default function AuthContextProvider({ children }) {
     checkAuth();
   }, []);
 
+  useEffect(() => {
+    const fetchResult = async () => {
+      if (loading || !user) return;
+      setResultLoading(true);
+      try {
+        const response = await axios.get("/api/quiz/result", {
+          withCredentials: true,
+        });
+        const { score, answeredQuestions, questions, correctAnswers } =
+          response.data;
+
+        setResult({
+          score,
+          answeredQuestions: answeredQuestions || {},
+          questions: questions || [],
+          correctAnswers: correctAnswers || 0,
+        });
+      } catch (error) {
+        console.error("Failed to fetch quiz results", error);
+      } finally {
+        setResultLoading(false);
+      }
+    };
+    fetchResult();
+  }, [user]);
+
   return (
     <AuthContext.Provider
       value={{
@@ -34,6 +61,8 @@ export default function AuthContextProvider({ children }) {
         setLoading,
         loading,
         user,
+        result,
+        resultLoading,
         setUser,
       }}
     >

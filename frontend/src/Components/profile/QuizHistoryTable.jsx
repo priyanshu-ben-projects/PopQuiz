@@ -70,7 +70,7 @@ function QuizHistoryTable({ records, isTeacher, onView }) {
                   </td>
 
                   <td className="whitespace-nowrap px-5 py-4 text-slate-500">
-                    record.date
+                    {record.date}
                   </td>
 
                   <td className="px-5 py-4">

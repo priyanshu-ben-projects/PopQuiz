@@ -29,6 +29,11 @@ const resultSchema = new mongoose.Schema(
             required: true,
         },
 
+        duration: {
+            type: Number,
+            required: true,
+        },
+
         correctAnswers: {
             type: Number,
             required: true,
