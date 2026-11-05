@@ -1,10 +1,13 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useContext } from "react";
 import RenderQuestions from "./RenderQuestions";
 import ProgressBar from "./ProgressBar";
 import Timer from "./Timer";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import AuthContext from "../context/AuthContext.js";
+
 export default function QuestionCard({ questions, duration }) {
+  const { refreshResult } = useContext(AuthContext);
   const [score, setScore] = useState(0);
   const [index, setIndex] = useState(0);
   const navigate = useNavigate();
@@ -58,7 +61,7 @@ export default function QuestionCard({ questions, duration }) {
         duration,
       },
     });
-
+    await refreshResult();
     navigate("/result");
   }, [answeredQuestions, questions, score, navigate]);
 

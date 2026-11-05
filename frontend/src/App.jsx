@@ -14,7 +14,7 @@ import Login from "./Components/Login";
 import AuthContextProvider from "./context/AuthContextProvider";
 import Profile from "./Pages/Profile.jsx";
 import IsLoggedIn from "./utils/IsLoggedIn.jsx";
-
+import Dashboard from "./Pages/Dashboard";
 function App() {
   return (
     <AuthContextProvider>
@@ -24,7 +24,7 @@ function App() {
             <Route path="/result" element={<ResultPage />}></Route>
             <Route path="/assessment" element={<AssessmentForm />}></Route>
             <Route path="/quiz" element={<QuizPage />}></Route>
-            <Route path="/dashboard" element={<Profile />}></Route>
+            <Route path="/profile" element={<Profile />}></Route>
           </Route>
 
           <Route path="/" element={<Home />}></Route>
@@ -32,6 +32,11 @@ function App() {
           <Route path="/about" element={<AboutPage />}></Route>
           <Route path="/login" element={<Login />}></Route>
         </Route>
+
+        <Route element={<IsLoggedIn />}>
+          <Route path="/dashboard" element={<Dashboard />}></Route>
+        </Route>
+
         <Route path="/register" element={<RegisterUI />}></Route>
       </Routes>
     </AuthContextProvider>

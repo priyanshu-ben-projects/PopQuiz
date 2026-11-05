@@ -1,5 +1,5 @@
 import AuthContext from "./AuthContext";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import axios from "axios";
 
 export default function AuthContextProvider({ children }) {
@@ -8,26 +8,8 @@ export default function AuthContextProvider({ children }) {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(true);
   const [resultLoading, setResultLoading] = useState(false);
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const response = await axios.get(`/api/user/auth`, {
-          withCredentials: true,
-        });
-        setIsAuthenticated(response.data.isAuthenticated);
-        setUser(response.data.user);
-      } catch (err) {
-        setUser(null);
-        setIsAuthenticated(false);
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    checkAuth();
-  }, []);
-
-  useEffect(() => {
+  const refreshResult = useCallback(() => {
     const fetchResult = async () => {
       if (loading || !user) return;
       setResultLoading(true);
@@ -53,6 +35,31 @@ export default function AuthContextProvider({ children }) {
     fetchResult();
   }, [user]);
 
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await axios.get(`/api/user/auth`, {
+          withCredentials: true,
+        });
+        setIsAuthenticated(response.data.isAuthenticated);
+        setUser(response.data.user);
+      } catch (err) {
+        setUser(null);
+        setIsAuthenticated(false);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkAuth();
+  }, []);
+
+  useEffect(() => {
+    if (!loading && user) {
+      refreshResult();
+    }
+  }, [loading, user, refreshResult]);
+
   return (
     <AuthContext.Provider
       value={{
@@ -63,6 +70,7 @@ export default function AuthContextProvider({ children }) {
         user,
         result,
         resultLoading,
+        refreshResult,
         setUser,
       }}
     >

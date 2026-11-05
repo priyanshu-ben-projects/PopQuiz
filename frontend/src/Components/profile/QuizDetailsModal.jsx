@@ -1,3 +1,4 @@
+import questions from "@/Questions";
 import axios from "axios";
 import {
   X,
@@ -13,27 +14,41 @@ import { useEffect, useState } from "react";
 
 function QuizDetailsModal({ record, onClose }) {
   const [report, setReport] = useState(null);
-
+  // const [reportData, setReportData] = useState(null);
   useEffect(() => {
     const getRecord = async () => {
       const response = await axios.get("/api/quiz/report", {
         params: { recordID: record._id },
       });
-      console.log(response.data.report);
       setReport(response.data.report);
+
+      console.log(response.data.report);
     };
 
     getRecord();
   }, []);
 
-  if (!record) return null;
+  if (!report) return null;
 
   const score = Number(report.score) || 0;
   const correctAnswers = Number(report.correctAnswers) || 0;
   const totalQuestions = Number(report.totalQuestions) || 0;
-  const incorrectAnswers = incorrectAnswers;
+  const incorrectAnswers = report.incorrectAnswers;
+  1;
 
-  const formattedDate = report.date;
+  const formatDuration = () => {
+    const hours = Math.floor(report.duration / 3600);
+    const minutes = Math.floor((report.duration % 3600) / 60);
+    const remainingSeconds = report.duration % 60;
+
+    return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
+  };
+
+  const duration = formatDuration();
+  const progress =
+    totalQuestions > 0
+      ? Math.floor((correctAnswers / totalQuestions) * 100)
+      : 0;
 
   const stats = [
     {
@@ -82,7 +97,7 @@ function QuizDetailsModal({ record, onClose }) {
               id="quiz-details-title"
               className="mt-1 text-xl font-bold text-slate-900"
             >
-              {record.title || "Quiz Details"}
+              {report.title || "Quiz Details"}
             </h2>
 
             <p className="mt-1 text-sm text-slate-500">
@@ -108,17 +123,14 @@ function QuizDetailsModal({ record, onClose }) {
             </div>
 
             <div className="mt-3 flex items-end gap-2">
-              <span className="text-5xl font-bold">{score}%</span>
-              <span className="mb-1 text-sm text-sky-100">
-                {record.status === "completed" ? "Completed" : "Incomplete"}
-              </span>
+              <span className="text-5xl font-bold">{progress}%</span>
             </div>
 
             <div className="mt-5 h-2 overflow-hidden rounded-full bg-white/25">
               <div
                 className="h-full rounded-full bg-white transition-all"
                 style={{
-                  width: `${Math.min(100, Math.max(0, score))}%`,
+                  width: `${progress}%`,
                 }}
               />
             </div>
@@ -150,7 +162,7 @@ function QuizDetailsModal({ record, onClose }) {
               <div>
                 <p className="text-xs text-slate-500">Attempt Date</p>
                 <p className="mt-1 text-sm font-semibold text-slate-800">
-                  {record.date}
+                  {report.date}
                 </p>
               </div>
             </div>
@@ -161,7 +173,7 @@ function QuizDetailsModal({ record, onClose }) {
               <div>
                 <p className="text-xs text-slate-500">Duration</p>
                 <p className="mt-1 text-sm font-semibold text-slate-800">
-                  {record.duration || "Not available"}
+                  {duration || "Not available"}
                 </p>
               </div>
             </div>

@@ -150,7 +150,7 @@ const getReport = async (req, res, next) => {
     const getResult = await Result.findById(recordID);
 
 
-    const { _id, user, title, score, correctAnswers, createdAt, answeredQuestions, isCompleted, questions } = getResult;
+    const { _id, user, title, score, correctAnswers, createdAt, duration, answeredQuestions, isCompleted, questions } = getResult;
     const keys = Object.keys(answeredQuestions);
 
     res.status(200).json({
@@ -164,6 +164,7 @@ const getReport = async (req, res, next) => {
             totalQuestions: questions.length,
             incorrectAnswers: questions.length - keys.length,
             date: new Date(createdAt).toLocaleDateString("en-US"),
+            duration,
         }
     })
 

@@ -1,35 +1,38 @@
-import { useEffect, useContext, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useContext, useState, useRef, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
-import { UserButton } from "./ui/userButton";
-import { DoorOpen, LogOutIcon } from "lucide-react";
+import { LogOut, UserRound, ChevronDown, LoaderCircle } from "lucide-react";
 import axios from "axios";
 
 export default function AuthButton() {
   const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null);
 
-  const {
-    isAuthenticated,
-    setIsAuthenticated,
-    loading,
-    setLoading,
-    user,
-    setUser,
-  } = useContext(AuthContext);
+  const { isAuthenticated, setIsAuthenticated, loading, user, setUser } =
+    useContext(AuthContext);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleLogout = async () => {
     try {
-      const response = await axios.post(
-        `api/user/logout`,
-        {},
-        {
-          withCredentials: true,
-        },
-      );
+      await axios.post("/api/user/logout", {}, { withCredentials: true });
 
       setIsAuthenticated(false);
-
       setUser(null);
+      setMenuOpen(false);
       navigate("/");
     } catch (err) {
       console.error("Logout failed:", err);
@@ -40,42 +43,77 @@ export default function AuthButton() {
     return (
       <button
         disabled
-        className="rounded-lg bg-slate-100 px-4 py-2 text-sm text-slate-400"
+        className="flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-medium text-slate-400"
       >
-        Loading...
+        <LoaderCircle size={16} className="animate-spin" />
+        Loading
       </button>
     );
   }
 
   if (isAuthenticated) {
     return (
-      <>
-        <Link to="/">
-          <UserButton></UserButton>
-        </Link>
+      <div className="relative" ref={menuRef}>
         <button
-          onClick={handleLogout}
-          className="rounded-lg  text-sm font-semibold text-white transition cursor-pointer"
+          onClick={() => setMenuOpen((prev) => !prev)}
+          className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 transition hover:border-sky-300 hover:bg-sky-50"
+          aria-expanded={menuOpen}
+          aria-label="Open profile menu"
         >
-          <LogOutIcon size={17} color="black" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-sky-100 text-sky-700">
+            <UserRound size={18} />
+          </div>
+
+          <span className="hidden max-w-28 truncate text-sm font-semibold text-slate-700 sm:block">
+            {user?.username || user?.name || "My Account"}
+          </span>
+
+          <ChevronDown
+            size={16}
+            className={`text-slate-500 transition-transform ${
+              menuOpen ? "rotate-180" : ""
+            }`}
+          />
         </button>
-      </>
+
+        {menuOpen && (
+          <div className="absolute right-0 z-50 mt-2 w-52 overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 shadow-lg">
+            <Link
+              to="/profile"
+              onClick={() => setMenuOpen(false)}
+              className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-700"
+            >
+              <UserRound size={17} />
+              My Profile
+            </Link>
+
+            <div className="my-1 border-t border-slate-100" />
+
+            <button
+              onClick={handleLogout}
+              className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-red-600 transition hover:bg-red-50"
+            >
+              <LogOut size={17} />
+              Logout
+            </button>
+          </div>
+        )}
+      </div>
     );
-    x;
   }
 
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-2 sm:gap-3">
       <Link
         to="/login"
-        className="rounded-lg px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+        className="rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
       >
         Login
       </Link>
 
       <Link
         to="/register"
-        className="rounded-lg bg-sky-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-sky-700"
+        className="rounded-xl bg-sky-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-700 hover:shadow-md"
       >
         Sign Up
       </Link>
