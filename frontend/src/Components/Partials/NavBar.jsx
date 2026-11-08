@@ -164,7 +164,7 @@ export default function Navbar() {
                     className={navigationMenuTriggerStyle()}
                   >
                     <NavLink
-                      to="/dashboard"
+                      to="/admin/dashboard"
                       className={({ isActive }) =>
                         `text-sm font-medium px-3.5 py-2 rounded-lg transition-colors ${
                           isActive
@@ -296,7 +296,7 @@ export default function Navbar() {
               {/* Dashboard Link */}
               <SheetClose asChild>
                 <NavLink
-                  to="/dashboard"
+                  to="/admin/dashboard"
                   className={({ isActive }) =>
                     `flex items-center gap-3 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all ${
                       isActive

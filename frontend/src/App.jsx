@@ -14,30 +14,42 @@ import Login from "./Components/Login";
 import AuthContextProvider from "./context/AuthContextProvider";
 import Profile from "./Pages/Profile.jsx";
 import IsLoggedIn from "./utils/IsLoggedIn.jsx";
-import Dashboard from "./Pages/Dashboard";
+import AdminDashboard from "./Pages/AdminDashboard.jsx";
+import MyQuizzes from "./Components/teacher/MyQuizzes.jsx";
+import { NavbarSimple } from "./Components/teacher/NavbarSimple";
+import CreateQuiz from "./pages/CreateQuiz.jsx";
 function App() {
   return (
     <AuthContextProvider>
       <Routes>
+        {/* Main Application Routes */}
         <Route path="/" element={<Layout />}>
           <Route element={<IsLoggedIn />}>
-            <Route path="/result" element={<ResultPage />}></Route>
-            <Route path="/assessment" element={<AssessmentForm />}></Route>
-            <Route path="/quiz" element={<QuizPage />}></Route>
-            <Route path="/profile" element={<Profile />}></Route>
+            <Route path="result" element={<ResultPage />} />
+            <Route path="assessment" element={<AssessmentForm />} />
+            <Route path="quiz" element={<QuizPage />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
 
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/categories" element={<BrowseCategory />}></Route>
-          <Route path="/about" element={<AboutPage />}></Route>
-          <Route path="/login" element={<Login />}></Route>
+          <Route index element={<Home />} />
+          <Route path="categories" element={<BrowseCategory />} />
+          <Route path="about" element={<AboutPage />} />
+          <Route path="login" element={<Login />} />
         </Route>
 
+        <Route path="/register" element={<RegisterUI />} />
+
+        {/* Protected Admin Routes */}
         <Route element={<IsLoggedIn />}>
-          <Route path="/dashboard" element={<Dashboard />}></Route>
-        </Route>
+          {/* Main Admin Dashboard */}
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
 
-        <Route path="/register" element={<RegisterUI />}></Route>
+          {/* Teacher Layout & Sub-routes */}
+          <Route path="/admin" element={<NavbarSimple />}>
+            <Route path="myquizzes" element={<MyQuizzes />} />
+            <Route path="createquizz" element={<CreateQuiz />} />
+          </Route>
+        </Route>
       </Routes>
     </AuthContextProvider>
   );

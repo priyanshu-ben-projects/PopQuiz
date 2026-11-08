@@ -1,6 +1,6 @@
 import { NavbarSimple } from "./NavbarSimple.jsx";
 
-export default function TeacherDashboard() {
+export default function AdminDashboard() {
   return (
     <>
       <NavbarSimple />
