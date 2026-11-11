@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
-import AuthButton from "../AuthButton";
 import {
   IconLayoutDashboard,
   IconHelp,
@@ -11,10 +10,12 @@ import {
   IconHome2,
   IconMenu2,
   IconX,
+  IconChevronLeft,
+  IconChevronRight,
 } from "@tabler/icons-react";
-import { Group, Image } from "@mantine/core";
+
+import AuthButton from "../AuthButton";
 import classes from "../../css/NavbarSimple.module.css";
-import logo from "../../assets/logoImg.png";
 
 const data = [
   { link: "/", label: "Home", icon: IconHome2 },
@@ -28,6 +29,7 @@ const data = [
 
 export function NavbarSimple() {
   const [opened, setOpened] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
 
   const links = data.map((item) => (
     <NavLink
@@ -35,12 +37,19 @@ export function NavbarSimple() {
       key={item.label}
       end
       onClick={() => setOpened(false)}
+      title={collapsed ? item.label : undefined}
       className={({ isActive }) =>
-        `${classes.link} ${isActive ? classes.active : ""}`
+        `${classes.link} ${isActive ? classes.active : ""} ${
+          collapsed ? "md:!justify-center md:!px-0" : ""
+        }`
       }
     >
-      <item.icon className={classes.linkIcon} stroke={1.5} />
-      <span>{item.label}</span>
+      <item.icon
+        className={`${classes.linkIcon} ${collapsed ? "md:!mr-0" : ""}`}
+        stroke={1.5}
+      />
+
+      <span className={collapsed ? "md:hidden" : ""}>{item.label}</span>
     </NavLink>
   ));
 
@@ -48,8 +57,6 @@ export function NavbarSimple() {
     <div className="flex min-h-screen bg-slate-50">
       {/* Mobile Header */}
       <header className="md:hidden fixed top-0 left-0 right-0 z-50 h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4">
-        <Image src={logo} alt="PopQuiz Logo" h={42} w="auto" fit="contain" />
-
         <button
           onClick={() => setOpened(!opened)}
           className="p-2 rounded-lg hover:bg-slate-100"
@@ -76,43 +83,53 @@ export function NavbarSimple() {
           top-0 left-0
           z-50 md:z-30
           h-screen
-          w-64
           bg-white
-          transition-transform duration-300
+          w-[300px]
+          ${
+            collapsed
+              ? "md:!w-20 md:!min-w-20"
+              : "md:!w-[300px] md:!min-w-[300px]"
+          }
           ${opened ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0
+          transition-[width,min-width,transform] duration-300 ease-in-out
         `}
       >
-        <div className={classes.navbarMain}>
-          {/* Desktop Logo */}
-          <Group
-            className={`${classes.header} hidden md:flex`}
-            justify="space-between"
-          >
-            <Group gap="xs">
-              <Image
-                src={logo}
-                alt="PopQuiz Logo"
-                w="auto"
-                h={50}
-                fit="contain"
-              />
-            </Group>
-          </Group>
-
-          {/* Mobile Sidebar Heading */}
-          <div className="md:hidden flex justify-between items-center px-4 py-5">
-            <span className="font-semibold text-slate-800">Teacher Menu</span>
-            <button onClick={() => setOpened(false)} aria-label="Close menu">
-              <IconX size={21} />
-            </button>
-          </div>
-
-          {links}
+        {/* Desktop Auth Section */}
+        <div className="hidden md:flex items-center justify-center min-h-[85px] px-1">
+          <AuthButton collapsed={collapsed} />
         </div>
 
-        <div className="w-full p-3">
+        {/* Mobile Sidebar Header */}
+        <div className="md:hidden flex justify-between items-center px-4 py-5">
+          <span className="font-semibold text-slate-800">~</span>
+
+          <button onClick={() => setOpened(false)} aria-label="Close menu">
+            <IconX size={21} />
+          </button>
+        </div>
+
+        {/* Mobile Auth Section */}
+
+        {/* Navigation Links */}
+        <div className={`${classes.navbarMain} overflow-y-auto`}>{links}</div>
+        <div className="md:hidden px-4 py-3 border-b border-slate-100">
           <AuthButton />
+        </div>
+        {/* Desktop Collapse Button */}
+        <div className="hidden md:flex justify-center py-3 border-t border-slate-100">
+          <button
+            onClick={() => setCollapsed(!collapsed)}
+            className="p-2.5 rounded-lg text-slate-600 hover:bg-sky-50 hover:text-sky-600 transition-colors"
+            title={collapsed ? "Expand Sidebar" : "Collapse Sidebar"}
+            aria-label={collapsed ? "Expand Sidebar" : "Collapse Sidebar"}
+          >
+            {collapsed ? (
+              <IconChevronRight size={22} />
+            ) : (
+              <IconChevronLeft size={22} />
+            )}
+          </button>
         </div>
       </nav>
 

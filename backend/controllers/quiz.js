@@ -1,7 +1,8 @@
 import Question from "../models/question.js";
 import Result from "../models/result.js";
 import Category from "../models/category.js";
-
+import Quiz from "../models/quiz.js";
+// General Quiz Routes
 const startQuiz = async (req, res, next) => {
 
     let { category, questionCount } = req.query;
@@ -170,5 +171,34 @@ const getReport = async (req, res, next) => {
 
 }
 
+// Admin Quiz Routes
 
-export default { getStats, getReport, startQuiz, saveResult, getResult, getRecords };
+const newQuiz = async (req, res, next) => {
+
+    res.send("Hakoona Matata");
+    console.log(req.body)
+
+}
+
+
+
+
+
+
+const editQuiz = async (req, res, next) => {
+
+}
+
+
+const deleteQuiz = async (req, res, next) => {
+
+}
+
+const showQuizzes = async (req, res, next) => {
+
+}
+
+
+
+
+export default { newQuiz, editQuiz, deleteQuiz, showQuizzes, getStats, getReport, startQuiz, saveResult, getResult, getRecords };

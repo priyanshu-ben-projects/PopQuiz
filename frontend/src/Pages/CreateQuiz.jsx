@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {
   IconArrowLeft,
@@ -12,6 +13,9 @@ import {
 
 export default function CreateQuiz() {
   const navigate = useNavigate();
+
+  const [submitting, setSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [quizData, setQuizData] = useState({
     title: "",
@@ -47,27 +51,126 @@ export default function CreateQuiz() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setErrorMessage("");
+
+    // Basic validation
+    if (!quizData.title.trim() || !quizData.category.trim()) {
+      setErrorMessage("Please enter quiz title and category.");
+      return;
+    }
+
+    if (
+      Number(quizData.totalQuestions) < 1 ||
+      Number(quizData.pointsPerQuestion) <= 0
+    ) {
+      setErrorMessage("Please enter valid assessment settings.");
+      return;
+    }
+
+    if (quizData.timerEnabled && Number(quizData.duration) < 1) {
+      setErrorMessage("Please enter a valid quiz duration.");
+      return;
+    }
+
+    if (quizData.negativeMarking && Number(quizData.negativeMarks) < 0) {
+      setErrorMessage("Negative marks cannot be less than zero.");
+      return;
+    }
+
+    // Schedule validation
+    if (quizData.scheduleEnabled) {
+      const { startDate, startTime, endDate, endTime } = quizData;
+
+      if (!startDate || !startTime || !endDate || !endTime) {
+        setErrorMessage("Please complete all scheduling fields.");
+        return;
+      }
+
+      const start = new Date(`${startDate}T${startTime}`);
+      const end = new Date(`${endDate}T${endTime}`);
+
+      if (
+        Number.isNaN(start.getTime()) ||
+        Number.isNaN(end.getTime()) ||
+        end <= start
+      ) {
+        setErrorMessage(
+          "End date and time must be after the start date and time.",
+        );
+        return;
+      }
+    }
+
+    // Prepare payload according to Quiz Schema
     const newQuiz = {
-      ...quizData,
-      id: `quiz-${Date.now()}`,
+      title: quizData.title.trim(),
+      description: quizData.description.trim(),
+      category: quizData.category.trim(),
+      syllabus: quizData.syllabus.trim(),
+
       totalQuestions: Number(quizData.totalQuestions),
       pointsPerQuestion: Number(quizData.pointsPerQuestion),
+
+      negativeMarking: quizData.negativeMarking,
       negativeMarks: quizData.negativeMarking
         ? Number(quizData.negativeMarks)
         : 0,
-      duration: quizData.timerEnabled ? Number(quizData.duration) : null,
+
+      difficulty: quizData.difficulty,
+
+      timerEnabled: quizData.timerEnabled,
+      duration: quizData.timerEnabled ? Number(quizData.duration) : 0,
+
+      scheduleEnabled: quizData.scheduleEnabled,
+
+      startDate: quizData.scheduleEnabled
+        ? new Date(`${quizData.startDate}T00:00:00`).toISOString()
+        : null,
+
+      startTime: quizData.scheduleEnabled ? quizData.startTime : "",
+
+      endDate: quizData.scheduleEnabled
+        ? new Date(`${quizData.endDate}T00:00:00`).toISOString()
+        : null,
+
+      endTime: quizData.scheduleEnabled ? quizData.endTime : "",
+
+      rules: quizData.rules.trim(),
+      instructions: quizData.instructions.trim(),
+
       maximumMarks:
         Number(quizData.totalQuestions) * Number(quizData.pointsPerQuestion),
-      createdAt: new Date().toISOString(),
+
       status: "Draft",
     };
 
-    navigate("/admin/myquizzes", {
-      state: { createdQuiz: newQuiz },
-    });
+    try {
+      setSubmitting(true);
+
+      const response = await axios.post("/api/quiz/new", newQuiz, {
+        withCredentials: true,
+      });
+
+      console.log("Quiz Created:", response.data);
+
+      navigate("/admin/myquizzes", {
+        state: {
+          message: "Quiz created successfully!",
+        },
+      });
+    } catch (error) {
+      console.error("Failed to create quiz:", error);
+
+      setErrorMessage(
+        error.response?.data?.message ||
+          "Failed to create quiz. Please try again.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const inputClass =
@@ -82,6 +185,7 @@ export default function CreateQuiz() {
     <label className="flex cursor-pointer items-center justify-between gap-4">
       <div>
         <p className="text-sm font-semibold text-slate-800">{label}</p>
+
         <p className="mt-1 text-xs text-slate-500">{description}</p>
       </div>
 
@@ -127,8 +231,10 @@ export default function CreateQuiz() {
           <section className={sectionClass}>
             <div className="flex items-center gap-3">
               <IconFileText className="text-sky-600" size={22} />
+
               <div>
                 <h2 className="font-bold text-slate-900">Basic Information</h2>
+
                 <p className="text-xs text-slate-500">
                   Give your quiz an identity.
                 </p>
@@ -137,19 +243,21 @@ export default function CreateQuiz() {
 
             <div>
               <label className={labelClass}>Quiz Title *</label>
+
               <input
                 name="title"
+                required
                 value={quizData.title}
                 onChange={handleChange}
                 placeholder="e.g. JavaScript Fundamentals"
                 className={inputClass}
-                required
                 maxLength={100}
               />
             </div>
 
             <div>
-              <label className={labelClass}>Description *</label>
+              <label className={labelClass}>Description</label>
+
               <textarea
                 name="description"
                 value={quizData.description}
@@ -158,8 +266,8 @@ export default function CreateQuiz() {
                 rows={3}
                 maxLength={500}
                 className={inputClass}
-                required
               />
+
               <p className="mt-1 text-right text-xs text-slate-400">
                 {quizData.description.length}/500
               </p>
@@ -167,13 +275,14 @@ export default function CreateQuiz() {
 
             <div>
               <label className={labelClass}>Category *</label>
+
               <input
                 name="category"
+                required
                 value={quizData.category}
                 onChange={handleChange}
                 placeholder="Create your own category..."
                 className={inputClass}
-                required
                 maxLength={60}
               />
             </div>
@@ -183,6 +292,7 @@ export default function CreateQuiz() {
                 <IconBook size={16} className="mr-1 inline" />
                 Syllabus / Topics Covered
               </label>
+
               <textarea
                 name="syllabus"
                 value={quizData.syllabus}
@@ -201,10 +311,12 @@ export default function CreateQuiz() {
           <section className={sectionClass}>
             <div className="flex items-center gap-3">
               <IconGauge className="text-sky-600" size={22} />
+
               <div>
                 <h2 className="font-bold text-slate-900">
                   Assessment Settings
                 </h2>
+
                 <p className="text-xs text-slate-500">
                   Configure questions and scoring.
                 </p>
@@ -214,29 +326,31 @@ export default function CreateQuiz() {
             <div className="grid gap-5 sm:grid-cols-2">
               <div>
                 <label className={labelClass}>Number of Questions *</label>
+
                 <input
                   type="number"
                   name="totalQuestions"
                   min="1"
                   max="500"
+                  required
                   value={quizData.totalQuestions}
                   onChange={handleChange}
                   className={inputClass}
-                  required
                 />
               </div>
 
               <div>
                 <label className={labelClass}>Points Per Question *</label>
+
                 <input
                   type="number"
                   name="pointsPerQuestion"
                   min="0.1"
                   step="0.1"
+                  required
                   value={quizData.pointsPerQuestion}
                   onChange={handleChange}
                   className={inputClass}
-                  required
                 />
               </div>
             </div>
@@ -245,6 +359,7 @@ export default function CreateQuiz() {
               <p className="text-xs font-medium text-sky-700">
                 Maximum Possible Marks
               </p>
+
               <p className="mt-1 text-2xl font-bold text-sky-900">
                 {(
                   Number(quizData.totalQuestions || 0) *
@@ -265,6 +380,7 @@ export default function CreateQuiz() {
                   <label className={labelClass}>
                     Marks Deducted Per Wrong Answer
                   </label>
+
                   <input
                     type="number"
                     name="negativeMarks"
@@ -273,7 +389,6 @@ export default function CreateQuiz() {
                     value={quizData.negativeMarks}
                     onChange={handleChange}
                     className={inputClass}
-                    required
                   />
                 </div>
               )}
@@ -281,6 +396,7 @@ export default function CreateQuiz() {
 
             <div>
               <label className={labelClass}>Difficulty Level</label>
+
               <select
                 name="difficulty"
                 value={quizData.difficulty}
@@ -298,10 +414,12 @@ export default function CreateQuiz() {
           <section className={sectionClass}>
             <div className="flex items-center gap-3">
               <IconClock className="text-sky-600" size={22} />
+
               <div>
                 <h2 className="font-bold text-slate-900">
                   Time & Availability
                 </h2>
+
                 <p className="text-xs text-slate-500">
                   Control the quiz duration and schedule.
                 </p>
@@ -318,15 +436,16 @@ export default function CreateQuiz() {
               {quizData.timerEnabled && (
                 <div className="mt-5">
                   <label className={labelClass}>Duration (Minutes) *</label>
+
                   <input
                     type="number"
                     name="duration"
                     min="1"
                     max="600"
+                    required
                     value={quizData.duration}
                     onChange={handleChange}
                     className={inputClass}
-                    required
                   />
                 </div>
               )}
@@ -343,50 +462,54 @@ export default function CreateQuiz() {
                 <div className="mt-5 grid gap-5 sm:grid-cols-2">
                   <div>
                     <label className={labelClass}>Start Date *</label>
+
                     <input
                       type="date"
                       name="startDate"
+                      required
                       value={quizData.startDate}
                       onChange={handleChange}
                       className={inputClass}
-                      required
                     />
                   </div>
 
                   <div>
                     <label className={labelClass}>Start Time *</label>
+
                     <input
                       type="time"
                       name="startTime"
+                      required
                       value={quizData.startTime}
                       onChange={handleChange}
                       className={inputClass}
-                      required
                     />
                   </div>
 
                   <div>
                     <label className={labelClass}>End Date *</label>
+
                     <input
                       type="date"
                       name="endDate"
                       min={quizData.startDate || undefined}
+                      required
                       value={quizData.endDate}
                       onChange={handleChange}
                       className={inputClass}
-                      required
                     />
                   </div>
 
                   <div>
                     <label className={labelClass}>End Time *</label>
+
                     <input
                       type="time"
                       name="endTime"
+                      required
                       value={quizData.endTime}
                       onChange={handleChange}
                       className={inputClass}
-                      required
                     />
                   </div>
                 </div>
@@ -398,10 +521,12 @@ export default function CreateQuiz() {
           <section className={sectionClass}>
             <div className="flex items-center gap-3">
               <IconListCheck className="text-sky-600" size={22} />
+
               <div>
                 <h2 className="font-bold text-slate-900">
                   Rules & Instructions
                 </h2>
+
                 <p className="text-xs text-slate-500">
                   Tell students how to attempt the quiz.
                 </p>
@@ -410,6 +535,7 @@ export default function CreateQuiz() {
 
             <div>
               <label className={labelClass}>Quiz Rules</label>
+
               <textarea
                 name="rules"
                 value={quizData.rules}
@@ -425,6 +551,7 @@ export default function CreateQuiz() {
 
             <div>
               <label className={labelClass}>Additional Instructions</label>
+
               <textarea
                 name="instructions"
                 value={quizData.instructions}
@@ -437,21 +564,30 @@ export default function CreateQuiz() {
             </div>
           </section>
 
+          {/* Error Message */}
+          {errorMessage && (
+            <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-600">
+              {errorMessage}
+            </div>
+          )}
+
           {/* Submit */}
           <div className="flex flex-col-reverse justify-end gap-3 sm:flex-row">
             <button
               type="button"
               onClick={() => navigate("/admin/myquizzes")}
-              className="rounded-xl border border-slate-200 px-6 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-100"
+              disabled={submitting}
+              className="rounded-xl border border-slate-200 px-6 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-100 disabled:opacity-50"
             >
               Cancel
             </button>
 
             <button
               type="submit"
-              className="rounded-xl bg-sky-600 px-7 py-3 text-sm font-semibold text-white shadow-sm hover:bg-sky-700"
+              disabled={submitting}
+              className="rounded-xl bg-sky-600 px-7 py-3 text-sm font-semibold text-white shadow-sm hover:bg-sky-700 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Create Quiz
+              {submitting ? "Creating Quiz..." : "Create Quiz"}
             </button>
           </div>
         </form>
