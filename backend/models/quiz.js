@@ -1,40 +1,47 @@
 
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 const quizSchema = new mongoose.Schema(
     {
+        // Basic Information
         title: {
             type: String,
             required: true,
             trim: true,
+            maxlength: 100,
         },
 
         description: {
             type: String,
             default: "",
+            maxlength: 500,
         },
 
         category: {
             type: String,
             required: true,
             trim: true,
+            maxlength: 60,
         },
 
         syllabus: {
             type: String,
             default: "",
+            maxlength: 2000,
         },
 
+        // Assessment Settings
         totalQuestions: {
             type: Number,
             required: true,
             min: 1,
+            max: 500,
         },
 
         pointsPerQuestion: {
             type: Number,
             required: true,
-            min: 0,
+            min: 0.1,
         },
 
         negativeMarking: {
@@ -54,6 +61,7 @@ const quizSchema = new mongoose.Schema(
             default: "Medium",
         },
 
+        // Timer Settings
         timerEnabled: {
             type: Boolean,
             default: false,
@@ -63,8 +71,10 @@ const quizSchema = new mongoose.Schema(
             type: Number,
             default: 0,
             min: 0,
+            max: 600,
         },
 
+        // Scheduling Settings
         scheduleEnabled: {
             type: Boolean,
             default: false,
@@ -90,19 +100,24 @@ const quizSchema = new mongoose.Schema(
             default: "",
         },
 
+        // Rules & Instructions
         rules: {
             type: String,
             default: "",
+            maxlength: 2000,
         },
 
         instructions: {
             type: String,
             default: "",
+            maxlength: 1000,
         },
 
+        // Quiz Information
         maximumMarks: {
             type: Number,
             default: 0,
+            min: 0,
         },
 
         status: {
@@ -110,15 +125,10 @@ const quizSchema = new mongoose.Schema(
             enum: ["Draft", "Published", "Completed", "Archived"],
             default: "Draft",
         },
-
-        createdBy: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
-            required: true,
-        },
-
     },
-    { timestamps: true }
+    {
+        timestamps: true,
+    }
 );
 
 const Quiz = mongoose.model("Quiz", quizSchema);

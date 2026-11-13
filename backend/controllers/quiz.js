@@ -36,13 +36,6 @@ const startQuiz = async (req, res, next) => {
 }
 
 const saveResult = async (req, res, next) => {
-
-    if (!req.user) {
-        res.status(500).json({
-            success: false,
-            msg: "User Must Be Logged In."
-        });
-    }
     const { _id } = req.user;
     const { answeredQuestions, duration, isCompleted, score, questions, correctAnswers } = req.body.data;
 
@@ -75,13 +68,6 @@ const getResult = async (req, res, next) => {
 }
 
 const getStats = async (req, res, next) => {
-
-    if (!req.isAuthenticated()) {
-        res.status(500).json({
-            success: false,
-            msg: "user must be logged in"
-        });
-    }
 
     const { _id, accountType } = req.user;
 
@@ -172,18 +158,60 @@ const getReport = async (req, res, next) => {
 }
 
 // Admin Quiz Routes
-
 const newQuiz = async (req, res, next) => {
 
-    res.send("Hakoona Matata");
-    console.log(req.body)
+    const {
+        title,
+        description,
+        category,
+        syllabus,
+        totalQuestions,
+        pointsPerQuestion,
+        negativeMarks,
+        difficulty,
+        timerEnabled,
+        duration,
+        scheduleEnabled,
+        startTime,
+        startDate,
+        endDate,
+        endTime,
+        rules,
+        instructions,
+        maximumMarks,
+        status
+    } = req.body;
+
+    const newQuiz = await Quiz.create({
+        title,
+        description,
+        category,
+        syllabus,
+        totalQuestions,
+        pointsPerQuestion,
+        negativeMarks,
+        difficulty,
+        timerEnabled,
+        duration,
+        scheduleEnabled,
+        startTime,
+        startDate,
+        endDate,
+        endTime,
+        rules,
+        instructions,
+        maximumMarks,
+        status
+    });
+
+    console.log(newQuiz)
+
+    res.status(200).json({
+        success: true,
+        msg: "Quiz Created successfully"
+    });
 
 }
-
-
-
-
-
 
 const editQuiz = async (req, res, next) => {
 
@@ -196,6 +224,21 @@ const deleteQuiz = async (req, res, next) => {
 
 const showQuizzes = async (req, res, next) => {
 
+    const quizzes = await Quiz.find({});
+    const formattedQuizzes = quizzes.map((e) => ({
+        id: e._id,
+        title: e.title,
+        description: e.description,
+        category: e.category,
+        questions: e.totalQuestions,
+        duration: e.duration,
+        createdAt: e.createdAt,
+        status: e.status,
+    }));
+
+
+
+    res.status(200).json({ formattedQuizzes })
 }
 
 
