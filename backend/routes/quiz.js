@@ -30,7 +30,7 @@ router.route("/show/:id").get(isLoggedIn, handleAsyncError(quizController.showQu
 
 router.route("/edit/:id").get(isLoggedIn, handleAsyncError(quizController.editQuiz));
 
-router.route("/delete/:id").get(isLoggedIn, handleAsyncError(quizController.deleteQuiz));
+router.route("/:id").delete(isLoggedIn, handleAsyncError(quizController.deleteQuiz));
 
 
 

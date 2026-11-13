@@ -18,6 +18,8 @@ import AdminDashboard from "./Pages/AdminDashboard.jsx";
 import MyQuizzes from "./Components/teacher/MyQuizzes.jsx";
 import { NavbarSimple } from "./Components/teacher/NavbarSimple";
 import CreateQuiz from "./pages/CreateQuiz.jsx";
+import ShowQuizDetails from "./Components/teacher/ShowQuizDetails";
+
 function App() {
   return (
     <AuthContextProvider>
@@ -48,6 +50,7 @@ function App() {
           <Route path="/admin" element={<NavbarSimple />}>
             <Route path="myquizzes" element={<MyQuizzes />} />
             <Route path="createquizz" element={<CreateQuiz />} />
+            <Route path="showQuizDetails" element={<ShowQuizDetails />} />
           </Route>
         </Route>
       </Routes>

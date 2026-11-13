@@ -217,8 +217,25 @@ const editQuiz = async (req, res, next) => {
 
 }
 
+const showQuizDetails = async (req, res, next) => {
+    res.send("Route Working!")
+}
+
 
 const deleteQuiz = async (req, res, next) => {
+    const { id } = req.params;
+
+    const handleDeletion = await Quiz.findByIdAndDelete(id);
+
+    if (handleDeletion) {
+        res.status(200).json({
+            msg: "Quiz successfully Deleted!"
+        });
+    } else {
+        res.status(404).json({
+            msg: "Record not found!"
+        });
+    }
 
 }
 
