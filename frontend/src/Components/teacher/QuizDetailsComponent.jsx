@@ -32,7 +32,7 @@ export default function QuizDetailsComponent({ quiz }, quizId) {
 
             <div className="flex items-center gap-3">
               <Link
-                to="/admin/quiz/edit"
+                to="/admin/editquiz"
                 state={{ id: quizId }}
                 className="inline-flex items-center gap-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 px-4 py-2 rounded-xl text-sm font-semibold shadow-sm transition-all"
               >

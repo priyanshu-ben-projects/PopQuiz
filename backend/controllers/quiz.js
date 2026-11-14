@@ -218,7 +218,10 @@ const editQuiz = async (req, res, next) => {
 }
 
 const showQuizDetails = async (req, res, next) => {
-    res.send("Route Working!")
+    const { id } = req.params;
+    const quiz = await Quiz.findById(id);
+    console.log(quiz)
+    res.status(200).json(quiz);
 }
 
 
@@ -261,4 +264,4 @@ const showQuizzes = async (req, res, next) => {
 
 
 
-export default { newQuiz, editQuiz, deleteQuiz, showQuizzes, getStats, getReport, startQuiz, saveResult, getResult, getRecords };
+export default { newQuiz, showQuizDetails, editQuiz, deleteQuiz, showQuizzes, getStats, getReport, startQuiz, saveResult, getResult, getRecords };

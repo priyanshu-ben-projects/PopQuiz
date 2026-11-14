@@ -19,7 +19,7 @@ import MyQuizzes from "./Components/teacher/MyQuizzes.jsx";
 import { NavbarSimple } from "./Components/teacher/NavbarSimple";
 import CreateQuiz from "./pages/CreateQuiz.jsx";
 import ShowQuizDetails from "./Components/teacher/ShowQuizDetails";
-
+import EditQuiz from "./Components/teacher/EditQuizComponent";
 function App() {
   return (
     <AuthContextProvider>
@@ -51,6 +51,7 @@ function App() {
             <Route path="myquizzes" element={<MyQuizzes />} />
             <Route path="createquizz" element={<CreateQuiz />} />
             <Route path="showQuizDetails" element={<ShowQuizDetails />} />
+            <Route path="editquiz" element={<EditQuiz />} />
           </Route>
         </Route>
       </Routes>

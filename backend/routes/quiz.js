@@ -26,7 +26,7 @@ router.route("/new").post(isLoggedIn, handleAsyncError(quizController.newQuiz));
 
 router.route("/myquizzes").get(isLoggedIn, handleAsyncError(quizController.showQuizzes));
 
-router.route("/show/:id").get(isLoggedIn, handleAsyncError(quizController.showQuizzes));
+router.route("/:id").get(isLoggedIn, handleAsyncError(quizController.showQuizDetails));
 
 router.route("/edit/:id").get(isLoggedIn, handleAsyncError(quizController.editQuiz));
 
