@@ -12,10 +12,9 @@ export default function ShowQuizDetails() {
   const [quizDetails, setQuizDetails] = useState({});
 
   const showQuiz = async () => {
-    console.log("Fetching data for Quiz ID from state:", quizId);
     try {
       const response = await axios.get(`/api/quiz/${quizId}`);
-      console.log(response.data);
+
       setQuizDetails(response.data);
     } catch (error) {
       console.log("Unable to Find Quiz :: ", error);
@@ -30,10 +29,12 @@ export default function ShowQuizDetails() {
 
   return (
     <>
-      <QuizDetailsComponent
-        quiz={quizDetails}
-        quizId={quizId}
-      ></QuizDetailsComponent>
+      {quizId && (
+        <QuizDetailsComponent
+          quiz={quizDetails}
+          quizId={quizId}
+        ></QuizDetailsComponent>
+      )}
     </>
   );
 }

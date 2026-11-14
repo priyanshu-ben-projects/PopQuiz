@@ -143,7 +143,7 @@ export default function DisplayQuizCard({ quiz = [], onDelete }) {
                           Duration
                         </p>
                         <p className="text-xs font-bold text-slate-800 mt-0.5">
-                          {item.duration || 0}m
+                          {item.duration || 0}
                         </p>
                       </div>
 

@@ -215,15 +215,28 @@ const newQuiz = async (req, res, next) => {
 
 const editQuiz = async (req, res, next) => {
 
+    const { id } = req.params;
+
+    const updatedQuiz = await Quiz.findByIdAndUpdate(id, req.body, { new: true, runValidators: true });
+
+    if (updatedQuiz) {
+        res.status(200).json({
+            status: "success",
+            msg: "Quiz Successfully Updated."
+        })
+    } else {
+        res.status(400).json({
+            status: "failed",
+            msg: "Patch Request failed.."
+        })
+    }
 }
 
 const showQuizDetails = async (req, res, next) => {
     const { id } = req.params;
     const quiz = await Quiz.findById(id);
-    console.log(quiz)
     res.status(200).json(quiz);
 }
-
 
 const deleteQuiz = async (req, res, next) => {
     const { id } = req.params;
@@ -252,6 +265,7 @@ const showQuizzes = async (req, res, next) => {
         category: e.category,
         questions: e.totalQuestions,
         duration: e.duration,
+        maximumMarks: e.maximumMarks,
         createdAt: e.createdAt,
         status: e.status,
     }));

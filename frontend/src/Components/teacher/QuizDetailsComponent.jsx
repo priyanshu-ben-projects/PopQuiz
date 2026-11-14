@@ -1,8 +1,9 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
-export default function QuizDetailsComponent({ quiz }, quizId) {
+export default function QuizDetailsComponent({ quiz, quizId }) {
   const isPublished = quiz.status === "Published";
   const navigate = useNavigate();
   const location = useLocation();
+
   return (
     <>
       <div className="min-h-screen w-full bg-slate-50/80 p-6 md:p-10">

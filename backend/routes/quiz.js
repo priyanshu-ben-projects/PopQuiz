@@ -28,7 +28,8 @@ router.route("/myquizzes").get(isLoggedIn, handleAsyncError(quizController.showQ
 
 router.route("/:id").get(isLoggedIn, handleAsyncError(quizController.showQuizDetails));
 
-router.route("/edit/:id").get(isLoggedIn, handleAsyncError(quizController.editQuiz));
+
+router.route("/edit/:id").patch(isLoggedIn, handleAsyncError(quizController.editQuiz));
 
 router.route("/:id").delete(isLoggedIn, handleAsyncError(quizController.deleteQuiz));
 
